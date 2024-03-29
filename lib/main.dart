@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: const Locale('ar', 'AE'),
+      locale: const Locale('ar'),
       title: 'Tax Project',
       theme: AppTheme.light,
       home: const RegisterPage(),

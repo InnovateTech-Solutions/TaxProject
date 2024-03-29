@@ -6,9 +6,21 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        body: RegisterWidget(),
+        body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xffffffff),
+                  Color(0xffffffff),
+                  Color(0xff265999),
+                ],
+              ),
+            ),
+            child: RegisterWidget()),
       ),
     );
   }

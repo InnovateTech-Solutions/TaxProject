@@ -5,7 +5,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       {required this.primary,
       required this.background,
       required this.buttoncolor,
-      required this.bordercolor,
+      required this.iconcolor,
       required this.mainTextcolor,
       required this.formTextColor,
       required this.subTextcolor});
@@ -13,7 +13,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
   final Color primary;
   final Color background;
   final Color buttoncolor;
-  final Color bordercolor;
+  final Color iconcolor;
   final Color formTextColor;
   final Color subTextcolor;
   final Color mainTextcolor;
@@ -24,7 +24,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       Color? background,
       Color? buttoncolor,
       Color? formTextColor,
-      Color? bordercolor,
+      Color? iconcolor,
       Color? subTextcolor,
       Color? mainTextcolor}) {
     return AppColorsExtension(
@@ -32,7 +32,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
         background: background ?? this.background,
         formTextColor: formTextColor ?? this.formTextColor,
         buttoncolor: buttoncolor ?? this.buttoncolor,
-        bordercolor: bordercolor ?? this.bordercolor,
+        iconcolor: iconcolor ?? this.iconcolor,
         subTextcolor: subTextcolor ?? this.subTextcolor,
         mainTextcolor: mainTextcolor ?? this.mainTextcolor);
   }
@@ -51,7 +51,7 @@ class AppColorsExtension extends ThemeExtension<AppColorsExtension> {
       background: Color.lerp(background, other.background, t)!,
       formTextColor: Color.lerp(formTextColor, other.formTextColor, t)!,
       buttoncolor: Color.lerp(buttoncolor, other.buttoncolor, t)!,
-      bordercolor: Color.lerp(bordercolor, other.bordercolor, t)!,
+      iconcolor: Color.lerp(iconcolor, other.iconcolor, t)!,
       mainTextcolor: Color.lerp(mainTextcolor, other.mainTextcolor, t)!,
       subTextcolor: Color.lerp(subTextcolor, other.subTextcolor, t)!,
     );
