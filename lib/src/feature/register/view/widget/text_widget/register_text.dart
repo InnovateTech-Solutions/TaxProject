@@ -41,7 +41,7 @@ class RegisterText {
       title,
       style: TextStyle(
         fontSize: 20,
-        color: AppTheme.lightAppColors.iconcolor,
+        color: AppTheme.lightAppColors.subTextcolor,
         fontFamily: 'Poppins-Mdeuim',
       ),
     );

@@ -11,4 +11,26 @@ class RegisterController extends GetxController {
   final taxNumber = TextEditingController();
   final ibanNumber = TextEditingController();
   final email = TextEditingController();
+  final PageController pageController = PageController();
+  final RxInt currentPageIndex = 0.obs;
+  RxBool color = false.obs;
+
+  double get progress => currentPageIndex.value / 2;
+
+  void nextPage() {
+    if (currentPageIndex.value < 1) {
+      pageController.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    } else {}
+  }
+
+  Color getIconColor(int currentIndex) {
+    if (currentIndex == 0) {
+      return const Color(0xffffffff);
+    } else {
+      return const Color(0xffCA9703);
+    }
+  }
 }

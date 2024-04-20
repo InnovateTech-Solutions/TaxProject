@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tax_project/src/feature/register/view/widget/main_widget/register_widget.dart';
+import 'package:tax_project/src/feature/periods/view/widget/main_widget/classified_periods_widget.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
-
+class ClassifiedPeriodsPage extends StatelessWidget {
+  const ClassifiedPeriodsPage(
+      {super.key, required this.periods, required this.year});
+  final String periods;
+  final String year;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +17,14 @@ class RegisterPage extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Color(0xffffffff),
-                  Color(0xffffffff),
                   Color(0xffA1BFE1),
                 ],
               ),
             ),
-            child: const RegisterWidget()),
+            child: ClassifiedPeriodsWidget(
+              periods: periods,
+              year: year,
+            )),
       ),
     );
   }

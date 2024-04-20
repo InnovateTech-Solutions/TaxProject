@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tax_project/src/feature/register/view/widget/main_widget/register_widget.dart';
+import 'package:tax_project/src/feature/dashboard/view/widget/main_widget/dashboard_widget.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
-
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +19,7 @@ class RegisterPage extends StatelessWidget {
                 ],
               ),
             ),
-            child: const RegisterWidget()),
+            child: const DashboardWidget()),
       ),
     );
   }

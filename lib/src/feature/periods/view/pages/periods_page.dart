@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tax_project/src/feature/register/view/widget/main_widget/register_widget.dart';
+import 'package:tax_project/src/feature/periods/view/widget/main_widget/periods_widget.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+class PeriodsPage extends StatelessWidget {
+  const PeriodsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +15,11 @@ class RegisterPage extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Color(0xffffffff),
-                  Color(0xffffffff),
                   Color(0xffA1BFE1),
                 ],
               ),
             ),
-            child: const RegisterWidget()),
+            child: const PeriodsWidget()),
       ),
     );
   }

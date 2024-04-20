@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
-import 'package:tax_project/src/feature/register/view/page/register_page.dart';
+import 'package:tax_project/src/feature/dashboard/view/pages/dashboard_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,15 +10,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       locale: const Locale('ar'),
       title: 'Tax Project',
       theme: AppTheme.light,
-      home: const RegisterPage(),
+      home: const DashboardPage(),
     );
   }
 }

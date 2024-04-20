@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tax_project/src/feature/register/view/widget/main_widget/register_widget.dart';
+import 'package:tax_project/src/feature/register/view/widget/main_widget/sec_register_widget.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+class SecRegisterPage extends StatelessWidget {
+  const SecRegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class RegisterPage extends StatelessWidget {
                 ],
               ),
             ),
-            child: const RegisterWidget()),
+            child: const SecRegisterWidget()),
       ),
     );
   }
