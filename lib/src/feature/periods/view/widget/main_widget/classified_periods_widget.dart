@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
+import 'package:tax_project/src/feature/category/view/page/category_page.dart';
 import 'package:tax_project/src/feature/periods/controller/periods_controller.dart';
 import 'package:tax_project/src/feature/periods/view/widget/text_widget/period_text.dart';
 
@@ -52,15 +53,24 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
               width: context.screenWidth,
-              height: context.screenHeight * 0.8,
+              height: context.screenHeight * 0.75,
               child: ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return periodContainer(
-                        context,
-                        periods == "odd"
-                            ? controller.oddList[index]
-                            : controller.evenList[index],
-                        index);
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(CategoryPage(
+                          periods: periods,
+                          year: year,
+                        ));
+                      },
+                      child: periodContainer(
+                          context,
+                          periods == "odd"
+                              ? controller.oddList[index]
+                              : controller.evenList[index],
+                          index),
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox(height: context.screenHeight * 0.04);
@@ -74,34 +84,34 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
       ),
     );
   }
+}
 
-  DelayedDisplay periodContainer(
-      BuildContext context, String title, int duration) {
-    return DelayedDisplay(
-      delay: Duration(milliseconds: duration * 300),
-      slidingCurve: Curves.linear,
-      slidingBeginOffset: duration.isOdd
-          ? const Offset(-1.0, 0.0)
-          : const Offset(1.0, 0.0), // Start from left
-      child: GestureDetector(
-        child: Container(
-          width: context.screenWidth,
-          height: context.screenWidth * 0.15,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: const Offset(0, 3),
-              ),
-            ],
-            borderRadius: BorderRadius.circular(15),
-            color: AppTheme.lightAppColors.primary,
-          ),
-          child: Center(child: PeriodText.buttonText(title)),
+DelayedDisplay periodContainer(
+    BuildContext context, String title, int duration) {
+  return DelayedDisplay(
+    delay: Duration(milliseconds: duration * 300),
+    slidingCurve: Curves.linear,
+    slidingBeginOffset: duration.isOdd
+        ? const Offset(-1.0, 0.0)
+        : const Offset(1.0, 0.0), // Start from left
+    child: GestureDetector(
+      child: Container(
+        width: context.screenWidth,
+        height: context.screenWidth * 0.15,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(15),
+          color: AppTheme.lightAppColors.primary,
         ),
+        child: Center(child: PeriodText.buttonText(title)),
       ),
-    );
-  }
+    ),
+  );
 }

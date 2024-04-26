@@ -4,9 +4,14 @@ import 'package:tax_project/src/feature/category/model/category_model.dart';
 class CategoryController extends GetxController {
   List<int> percentages = [16, 10, 4];
   List<CategoryModel> category = [
-    CategoryModel(title: "الرصيد المدور من الفترة السابقة", percentage: false),
     CategoryModel(
-        title: "المشتريات المحلية الخاضعة للضريبة بنسبة", percentage: true),
+      title: "الرصيد المدور من الفترة السابقة",
+      percentage: false,
+    ),
+    CategoryModel(
+        title: "المشتريات المحلية الخاضعة للضريبة بنسبة",
+        percentage: true,
+        percentageValue: [16, 12, 10, 0]),
     CategoryModel(title: "المستوردات الخاضعة للضريبة بنسبة", percentage: false),
     CategoryModel(title: "المستوردات مؤجلة توريد الضريبة", percentage: false),
     CategoryModel(title: 'لمشتريات والمستوردات المعفاة', percentage: false),

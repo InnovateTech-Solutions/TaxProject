@@ -79,6 +79,11 @@ class PeriodsWidget extends StatelessWidget {
                                 year: controller.yearController.text,
                               ),
                               transition: Transition.fade);
+                        } else {
+                          String year = ''; // Example year input
+                          String? validationResult =
+                              controller.yearValidate(year);
+                          Get.snackbar('خطأ', validationResult!);
                         }
                       })),
               SizedBox(

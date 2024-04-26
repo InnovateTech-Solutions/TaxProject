@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 class PeriodsController extends GetxController {
   final yearController = TextEditingController();
   final fromKey = GlobalKey<FormState>();
-
   String? yearValidate(String year) {
     int enteredYear = int.tryParse(year) ?? 0;
     if (enteredYear > DateTime.now().year) {
