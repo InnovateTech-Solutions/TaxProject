@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/bill/controller/bill_controller.dart';
+import 'package:tax_project/src/feature/bill/view/page/bill_page.dart';
 import 'package:tax_project/src/feature/register/model/form_model.dart';
+import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_form.dart';
 
-class BillFormWidget extends StatelessWidget {
+class BillFormWidget extends StatefulWidget {
   const BillFormWidget(
       {super.key,
       required this.periods,
@@ -17,11 +19,24 @@ class BillFormWidget extends StatelessWidget {
   final String year;
   final String img;
   final String category;
+
+  @override
+  State<BillFormWidget> createState() => _BillFormWidgetState();
+}
+
+class _BillFormWidgetState extends State<BillFormWidget> {
+  final controller = Get.put(BillController());
+  void clearText() {
+    controller.billImg.clear();
+    controller.billDate.clear();
+    controller.billNumber.clear();
+    controller.billValue.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BillController());
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: Form(
         key: controller.formKey,
         child: Column(
@@ -41,58 +56,99 @@ class BillFormWidget extends StatelessWidget {
             SizedBox(
               height: context.screenHeight * 0.05,
             ),
-            Text("صورة الفاتورة"),
+            const Text(
+              "صورة الفاتورة",
+              style: TextStyle(
+                fontFamily: 'Poppins-Bold',
+                fontSize: 20,
+              ),
+            ),
             FormWidget(
               formModel: FormModel(
-                  controller: controller.billImg,
-                  enableText: true,
-                  hintText: img,
-                  invisible: false,
-                  validator: null,
-                  type: TextInputType.name,
-                  inputFormat: null,
-                  onTap: null),
+                controller: controller.billImg,
+                enableText: true,
+                hintText: widget.img,
+                invisible: false,
+                validator: (value) => controller.validation(value!),
+                type: TextInputType.name,
+                inputFormat: null,
+              ),
             ),
             SizedBox(
-              height: context.screenHeight * .05,
+              height: context.screenHeight * .03,
             ),
-            FormWidget(
-              formModel: FormModel(
-                  controller: controller.billValue,
-                  enableText: true,
-                  hintText: img,
-                  invisible: false,
-                  validator: null,
-                  type: TextInputType.name,
-                  inputFormat: null,
-                  onTap: null),
+            const Text(
+              "قيمة الفاتورة",
+              style: TextStyle(
+                fontFamily: 'Poppins-Bold',
+                fontSize: 20,
+              ),
             ),
             SizedBox(
-              height: context.screenHeight * .05,
+              height: context.screenHeight * .01,
             ),
             FormWidget(
               formModel: FormModel(
-                  controller: controller.billNumber,
-                  enableText: true,
-                  hintText: img,
-                  invisible: false,
-                  validator: null,
-                  type: TextInputType.name,
-                  inputFormat: null,
-                  onTap: null),
+                controller: controller.billValue,
+                enableText: false,
+                hintText: "قيمة الفاتورة",
+                invisible: false,
+                validator: (value) => controller.validation(value!),
+                type: TextInputType.name,
+                inputFormat: null,
+              ),
             ),
             SizedBox(
-              height: context.screenHeight * .05,
+              height: context.screenHeight * .03,
+            ),
+            const Text(
+              "رقم الفاتورة",
+              style: TextStyle(
+                fontFamily: 'Poppins-Bold',
+                fontSize: 20,
+              ),
+            ),
+            SizedBox(
+              height: context.screenHeight * .01,
             ),
             FormWidget(
               formModel: FormModel(
-                  controller: controller.billDate,
-                  enableText: true,
-                  hintText: img,
-                  invisible: false,
-                  validator: null,
-                  type: TextInputType.name,
-                  inputFormat: null,
+                controller: controller.billNumber,
+                enableText: false,
+                hintText: "رقم الفاتورة",
+                invisible: false,
+                validator: (value) => controller.validation(value!),
+                type: TextInputType.name,
+                inputFormat: null,
+              ),
+            ),
+            SizedBox(
+              height: context.screenHeight * .03,
+            ),
+            const Text(
+              "تاريخ الفاتورة",
+              style: TextStyle(
+                fontFamily: 'Poppins-Bold',
+                fontSize: 20,
+              ),
+            ),
+            SizedBox(
+              height: context.screenHeight * .01,
+            ),
+            Stack(
+              children: [
+                FormWidget(
+                  formModel: FormModel(
+                    controller: controller.billDate,
+                    enableText: true,
+                    hintText: "تاريخ الفاتورة",
+                    invisible: false,
+                    validator: (value) => controller.validation(value!),
+                    type: TextInputType.name,
+                    inputFormat: [],
+                  ),
+                ),
+                GestureDetector(
                   onTap: () async {
                     final DateTime? picked = await showDatePicker(
                       context: context,
@@ -101,14 +157,30 @@ class BillFormWidget extends StatelessWidget {
                       lastDate: DateTime(2101),
                     );
                     if (picked != null) {
-                      // Do something with the selected date, for example, update the form controller
-                      controller.billDate.text = picked.toString();
+                      controller.billDate.text =
+                          "${picked.day.toString()}/${picked.month.toString()}/${picked.year.toString()}";
                     }
-                  }),
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    height: context.screenHeight * .08,
+                    width: context.screenWidth,
+                  ),
+                )
+              ],
             ),
             SizedBox(
               height: context.screenHeight * .05,
             ),
+            AppButton(
+                title: "التالي",
+                onTap: () {
+                  controller.addImg();
+                  controller.addBill();
+                  controller.totalBill();
+                  Get.to(const BillPage());
+                  clearText();
+                })
           ],
         ),
       ),

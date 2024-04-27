@@ -29,7 +29,10 @@ class PeriodText {
   static buttonText(String title) {
     return Text(
       title,
-      style: TextStyle(color: AppTheme.lightAppColors.background, fontSize: 20),
+      style: TextStyle(
+          color: AppTheme.lightAppColors.background,
+          fontSize: 20,
+          fontFamily: 'Poppins-Regular'),
     );
   }
 }

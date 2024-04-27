@@ -21,7 +21,7 @@ class Bill {
   int id;
   String img;
   int billNumber;
-  double billValue;
+  int billValue;
   int? vendorTaxNumber;
 
   Bill({
