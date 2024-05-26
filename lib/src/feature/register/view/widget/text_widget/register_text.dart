@@ -39,6 +39,7 @@ class RegisterText {
   static secIconText(String title) {
     return Text(
       title,
+      textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 20,
         color: AppTheme.lightAppColors.subTextcolor,

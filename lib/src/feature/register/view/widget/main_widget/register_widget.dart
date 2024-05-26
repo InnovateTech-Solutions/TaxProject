@@ -65,11 +65,12 @@ class RegisterWidget extends StatelessWidget {
               ),
             ),
             AppButton(
+                model: AppButtonModel(
               title: "التالي",
               onTap: () {
                 controller.nextPage();
               },
-            )
+            ))
           ],
         ),
       ),

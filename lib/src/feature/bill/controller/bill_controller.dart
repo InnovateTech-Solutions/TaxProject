@@ -62,6 +62,8 @@ class BillController extends GetxController {
       year: year,
     );
     bills.add(bill);
+    image.value = null; // Reset the image after adding the bill
+
     // image.value != null;
   }
 

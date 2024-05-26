@@ -4,7 +4,6 @@ import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_img.dart';
 import 'package:tax_project/src/feature/category/controller/category_controller.dart';
 import 'package:tax_project/src/feature/category/view/widget/widget_collection/category_container.dart';
-import 'package:tax_project/src/feature/tax_calculation/view/main/tax_calcuation_page.dart';
 
 import '../../../../../config/themes/theme.dart';
 import '../../../../periods/view/widget/text_widget/period_text.dart';
@@ -52,7 +51,7 @@ class CategoeyWidget extends StatelessWidget {
             ),
             SizedBox(
               width: context.screenWidth,
-              height: context.screenHeight * 0.67,
+              height: context.screenHeight * 0.77,
               child: ListView.separated(
                   itemBuilder: (context, index) {
                     return GestureDetector(
@@ -78,33 +77,6 @@ class CategoeyWidget extends StatelessWidget {
                     return SizedBox(height: context.screenHeight * 0.03);
                   },
                   itemCount: controller.category.length),
-            ),
-            GestureDetector(
-              onTap: () {
-                Get.to(const TaxCalculationPage());
-              },
-              child: Container(
-                padding: const EdgeInsets.only(left: 2, right: 2),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                width: context.screenWidth,
-                height: context.screenWidth * 0.15,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(20),
-                  color: AppTheme.lightAppColors.primary,
-                ),
-                child: Center(
-                    child: PeriodText.buttonText(
-                        "احتساب الضريبة المستحقة والرد\n الرصيد المدور للفترة القادمة")),
-              ),
             ),
           ],
         ),

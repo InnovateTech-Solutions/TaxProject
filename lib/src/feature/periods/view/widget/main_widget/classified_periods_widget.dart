@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
-import 'package:tax_project/src/feature/category/view/page/category_page.dart';
 import 'package:tax_project/src/feature/periods/controller/periods_controller.dart';
 import 'package:tax_project/src/feature/periods/view/widget/text_widget/period_text.dart';
+import 'package:tax_project/src/feature/pre_category/view/pages/pre_category_page.dart';
 
 class ClassifiedPeriodsWidget extends StatelessWidget {
   const ClassifiedPeriodsWidget(
@@ -59,7 +59,7 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.to(CategoryPage(
+                        Get.to(PreCategoryPage(
                           periods: periods,
                           year: year,
                         ));

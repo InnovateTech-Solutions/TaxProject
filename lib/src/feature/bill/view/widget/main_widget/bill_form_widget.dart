@@ -199,21 +199,22 @@ class _BillFormWidgetState extends State<BillFormWidget> {
                 height: context.screenHeight * .05,
               ),
               AppButton(
-                  title: "التالي",
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      controller.addImg();
-                      controller.addBill(widget.category, widget.year);
-                      controller.totalBill();
-                      Get.to(BillPage(
-                        year: widget.year,
-                        category: widget.category,
-                        periods: widget.periods,
-                        equation: widget.equation,
-                      ));
-                      clearText();
-                    }
-                  })
+                  model: AppButtonModel(
+                      title: "التالي",
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          controller.addImg();
+                          controller.addBill(widget.category, widget.year);
+                          controller.totalBill();
+                          Get.to(BillPage(
+                            year: widget.year,
+                            category: widget.category,
+                            periods: widget.periods,
+                            equation: widget.equation,
+                          ));
+                          clearText();
+                        }
+                      }))
             ],
           ),
         ),

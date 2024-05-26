@@ -16,12 +16,14 @@ class PeriodsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(PeriodsController());
+    final fromKey = GlobalKey<FormState>();
+
     return Container(
       margin: const EdgeInsets.all(20),
       height: context.screenHeight,
       child: SingleChildScrollView(
         child: Form(
-          key: controller.fromKey,
+          key: fromKey,
           child: Column(
             children: [
               Row(
@@ -72,7 +74,7 @@ class PeriodsWidget extends StatelessWidget {
                   child: PeriodsButton(
                       title: "فترات الزوجية",
                       onTap: () {
-                        if (controller.fromKey.currentState!.validate()) {
+                        if (fromKey.currentState!.validate()) {
                           Get.to(
                               ClassifiedPeriodsPage(
                                 periods: 'odd',
@@ -94,7 +96,7 @@ class PeriodsWidget extends StatelessWidget {
                   child: PeriodsButton(
                       title: "الفترات الفردية",
                       onTap: () {
-                        if (controller.fromKey.currentState!.validate()) {
+                        if (fromKey.currentState!.validate()) {
                           Get.to(
                               ClassifiedPeriodsPage(
                                   periods: 'even',

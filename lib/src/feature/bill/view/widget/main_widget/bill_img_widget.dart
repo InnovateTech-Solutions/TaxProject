@@ -83,23 +83,24 @@ class BillImgWiget extends StatelessWidget {
           SizedBox(
               width: context.screenWidth,
               child: AppButton(
-                  title: "تحميل فاتورة",
-                  onTap: () {
-                    if (controller.image.value == null) {
-                      Get.snackbar('خطأ', "اختر صورة",
-                          colorText: AppTheme.lightAppColors.background,
-                          backgroundColor: Colors.red);
-                    } else {
-                      controller.addImg();
-                      Get.to(BillFormPage(
-                        periods: periods,
-                        year: year,
-                        img: controller.image.value.toString(),
-                        category: category,
-                        equation: equation,
-                      ));
-                    }
-                  }))
+                  model: AppButtonModel(
+                      title: "تحميل فاتورة",
+                      onTap: () {
+                        if (controller.image.value == null) {
+                          Get.snackbar('خطأ', "اختر صورة",
+                              colorText: AppTheme.lightAppColors.background,
+                              backgroundColor: Colors.red);
+                        } else {
+                          controller.addImg();
+                          Get.to(BillFormPage(
+                            periods: periods,
+                            year: year,
+                            img: controller.image.value.toString(),
+                            category: category,
+                            equation: equation,
+                          ));
+                        }
+                      })))
         ],
       ),
     );

@@ -55,10 +55,11 @@ void showPopupButtons(BuildContext context) {
               height: context.screenHeight * .02,
             ),
             AppButton(
-                title: "الغاء",
-                onTap: () {
-                  Get.back();
-                }),
+                model: AppButtonModel(
+                    title: "الغاء",
+                    onTap: () {
+                      Get.back();
+                    })),
           ],
         ),
       );

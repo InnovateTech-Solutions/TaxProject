@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
-import 'package:tax_project/src/feature/dashboard/view/pages/dashboard_page.dart';
+import 'package:tax_project/src/feature/pre_category/view/widget/main/pre_category_widget.dart';
 import 'package:tax_project/src/feature/register/model/form_model.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_form.dart';
@@ -10,8 +10,10 @@ import 'package:tax_project/src/feature/tax_calculation/controller/tax_calculati
 import 'package:tax_project/src/feature/tax_calculation/view/text/tax_text.dart';
 
 class TaxCalculationWidget extends StatelessWidget {
-  const TaxCalculationWidget({super.key});
-
+  const TaxCalculationWidget(
+      {super.key, required this.periods, required this.year});
+  final String periods;
+  final String year;
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -162,11 +164,15 @@ class TaxCalculationWidget extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: AppButton(
+                    model: AppButtonModel(
                   title: "متابعة",
                   onTap: () {
-                    Get.to(const DashboardPage());
+                    Get.to(PreCategoryWidget(
+                      periods: periods,
+                      year: year,
+                    ));
                   },
-                ))
+                )))
           ],
         ),
       ),
@@ -230,10 +236,11 @@ class TaxCalculationWidget extends StatelessWidget {
                             TaxText.dialogText(title),
                             const Spacer(),
                             AppButton(
-                                title: "اغلاق",
-                                onTap: () {
-                                  Get.back();
-                                })
+                                model: AppButtonModel(
+                                    title: "اغلاق",
+                                    onTap: () {
+                                      Get.back();
+                                    }))
                           ],
                         )),
                   );
