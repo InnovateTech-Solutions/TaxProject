@@ -8,10 +8,13 @@ import 'package:tax_project/src/feature/category/model/category_model.dart';
 class BillController extends GetxController {
   RxList<File> billImgs = <File>[].obs;
   RxList<Bill> bills = <Bill>[].obs;
+  RxList<CategoryModel> category = <CategoryModel>[].obs;
+  RxList<TaxModel> tax = <TaxModel>[].obs;
+
   final picker = ImagePicker();
-  final formKey = GlobalKey<FormState>();
   Rx<File?> image = Rx<File?>(null);
-  Rx total = 0.obs;
+  RxDouble total = 0.0.obs;
+  RxDouble taxVlaue = 0.0.obs;
 
   validation(String value) {
     if (value.isEmpty) {
@@ -31,7 +34,6 @@ class BillController extends GetxController {
     if (pickedFile != null) {
       image.value = File(pickedFile.path);
     }
-    print(image.value);
   }
 
   Future<void> takeImages() async {
@@ -39,26 +41,39 @@ class BillController extends GetxController {
     if (pickedFile != null) {
       image.value = File(pickedFile.path);
     }
-    print(image.value);
   }
 
   Future<void> addImg() async {
     if (image.value != null) {}
-    print(image.value);
   }
 
-  Future<void> addBill() async {
+  Future<void> taxValueForBill(double equation) async {
+    taxVlaue.value = double.tryParse(billValue.text)! * (equation);
+  }
+
+  Future<void> addBill(String type, year) async {
     Bill bill = Bill(
-        id: 2,
-        img: billImg.text,
-        billNumber: int.parse(billNumber.text),
-        billValue: int.parse(billValue.text));
+      id: 2,
+      img: image.value,
+      billNumber: int.parse(billNumber.text),
+      billValue: int.parse(billValue.text),
+      billDate: billDate.text,
+      type: type,
+      year: year,
+    );
     bills.add(bill);
+    // image.value != null;
+  }
+
+  Future<void> addCategory(CategoryModel cat) async {
+    category.add(cat);
   }
 
   Future<void> totalBill() async {
+    double sum = 0;
     for (var bill in bills) {
-      total.value = bill.billValue++;
+      sum += bill.billValue;
     }
+    total.value = sum;
   }
 }

@@ -8,10 +8,13 @@ class BillFormPage extends StatelessWidget {
       required this.periods,
       required this.year,
       required this.img,
+      required this.equation,
       required this.category});
   final String periods;
   final String year;
   final String img;
+  final double equation;
+
   final String category;
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,12 @@ class BillFormPage extends StatelessWidget {
       child: Scaffold(
         body: backgroundColor(
             BillFormWidget(
-                periods: periods, year: year, img: img, category: category),
+              periods: periods,
+              year: year,
+              img: img,
+              category: category,
+              equation: equation,
+            ),
             context),
       ),
     );

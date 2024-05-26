@@ -6,10 +6,14 @@ class BillImgPage extends StatelessWidget {
   const BillImgPage(
       {super.key,
       required this.periods,
+      this.percentageValue,
       required this.year,
+      required this.equation,
       required this.category});
   final String periods;
   final String year;
+  final double? percentageValue;
+  final double equation;
   final String category;
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,7 @@ class BillImgPage extends StatelessWidget {
                 periods: periods,
                 year: year,
                 category: category,
+                equation: equation,
               ),
               context)),
     );

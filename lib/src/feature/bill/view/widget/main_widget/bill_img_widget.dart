@@ -13,9 +13,12 @@ class BillImgWiget extends StatelessWidget {
       {super.key,
       required this.periods,
       required this.year,
+      required this.equation,
       required this.category});
   final String periods;
   final String year;
+  final double equation;
+
   final String category;
   @override
   Widget build(BuildContext context) {
@@ -89,10 +92,12 @@ class BillImgWiget extends StatelessWidget {
                     } else {
                       controller.addImg();
                       Get.to(BillFormPage(
-                          periods: periods,
-                          year: year,
-                          img: controller.image.value.toString(),
-                          category: category));
+                        periods: periods,
+                        year: year,
+                        img: controller.image.value.toString(),
+                        category: category,
+                        equation: equation,
+                      ));
                     }
                   }))
         ],

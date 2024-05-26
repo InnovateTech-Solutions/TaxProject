@@ -3,6 +3,7 @@ import 'package:tax_project/src/feature/category/model/category_model.dart';
 
 class CategoryController extends GetxController {
   List<int> percentages = [16, 10, 4];
+
   List<CategoryModel> category = [
     CategoryModel(
       title: "الرصيد المدور من الفترة السابقة",

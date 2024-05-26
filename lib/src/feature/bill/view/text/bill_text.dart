@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tax_project/src/config/themes/theme.dart';
 
-class PeriodText {
+class BillText {
   static mainText(String title) {
     return Text(
       title,
@@ -17,23 +16,24 @@ class PeriodText {
   static secText(String title) {
     return Text(
       title,
-      textAlign: TextAlign.start,
+      textAlign: TextAlign.center,
       style: const TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.w900,
-        fontFamily: 'Poppins-Bold',
+        fontSize: 19,
+        fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins-Regular',
       ),
     );
   }
 
-  static buttonText(String title) {
+  static thirdText(String title) {
     return Text(
       title,
       textAlign: TextAlign.center,
-      style: TextStyle(
-          color: AppTheme.lightAppColors.background,
-          fontSize: 20,
-          fontFamily: 'Poppins-Regular'),
+      style: const TextStyle(
+        fontSize: 19,
+        fontWeight: FontWeight.w900,
+        fontFamily: 'Poppins-Regular',
+      ),
     );
   }
 }

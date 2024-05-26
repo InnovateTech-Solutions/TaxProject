@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:tax_project/src/feature/bill/view/widget/main_widget/bill_widget.dart';
 
 class BillPage extends StatelessWidget {
-  const BillPage({super.key});
+  const BillPage(
+      {super.key,
+      required this.year,
+      required this.category,
+      required this.equation,
+      required this.periods});
+  final String year;
+  final double equation;
 
+  final String category;
+  final String periods;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +28,12 @@ class BillPage extends StatelessWidget {
                 ],
               ),
             ),
-            child: const BillWidget()),
+            child: BillWidget(
+              year: year,
+              category: category,
+              periods: periods,
+              equation: equation,
+            )),
       ),
     );
   }

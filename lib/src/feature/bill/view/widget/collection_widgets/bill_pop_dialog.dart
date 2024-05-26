@@ -54,7 +54,11 @@ void showPopupButtons(BuildContext context) {
             SizedBox(
               height: context.screenHeight * .02,
             ),
-            AppButton(title: "الغاء", onTap: () {}),
+            AppButton(
+                title: "الغاء",
+                onTap: () {
+                  Get.back();
+                }),
           ],
         ),
       );

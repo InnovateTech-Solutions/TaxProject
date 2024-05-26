@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tax_project/src/config/themes/theme.dart';
 
-class PeriodText {
+class TaxText {
   static mainText(String title) {
     return Text(
       title,
       textAlign: TextAlign.center,
       style: const TextStyle(
         fontSize: 22,
-        fontWeight: FontWeight.w800,
         fontFamily: 'Poppins-Bold',
       ),
     );
@@ -19,21 +17,20 @@ class PeriodText {
       title,
       textAlign: TextAlign.start,
       style: const TextStyle(
-        fontSize: 22,
-        fontWeight: FontWeight.w900,
+        fontSize: 17,
         fontFamily: 'Poppins-Bold',
       ),
     );
   }
 
-  static buttonText(String title) {
+  static dialogText(String title) {
     return Text(
       title,
       textAlign: TextAlign.center,
-      style: TextStyle(
-          color: AppTheme.lightAppColors.background,
-          fontSize: 20,
-          fontFamily: 'Poppins-Regular'),
+      style: const TextStyle(
+        fontSize: 22,
+        fontFamily: 'Poppins-Bold',
+      ),
     );
   }
 }
