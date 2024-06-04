@@ -42,7 +42,19 @@ class RegisterText {
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 20,
-        color: AppTheme.lightAppColors.subTextcolor,
+        color: AppTheme.lightAppColors.background,
+        fontFamily: 'Poppins-Mdeuim',
+      ),
+    );
+  }
+
+  static thirdIconText(String title) {
+    return Text(
+      title,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 20,
+        color: AppTheme.lightAppColors.primary,
         fontFamily: 'Poppins-Mdeuim',
       ),
     );

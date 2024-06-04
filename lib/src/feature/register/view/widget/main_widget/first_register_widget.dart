@@ -26,7 +26,7 @@ class FirstRegiterWidget extends StatelessWidget {
         ),
       ),
       SizedBox(
-        height: context.screenHeight * 0.03,
+        height: context.screenHeight * 0.05,
       ),
       FormWidget(
         formModel: FormModel(
@@ -40,7 +40,7 @@ class FirstRegiterWidget extends StatelessWidget {
         ),
       ),
       SizedBox(
-        height: context.screenHeight * 0.03,
+        height: context.screenHeight * 0.05,
       ),
       FormWidget(
         formModel: FormModel(
@@ -54,33 +54,19 @@ class FirstRegiterWidget extends StatelessWidget {
         ),
       ),
       SizedBox(
-        height: context.screenHeight * 0.03,
+        height: context.screenHeight * 0.05,
       ),
       FormWidget(
         formModel: FormModel(
-          controller: controller.country,
+          controller: controller.taxNumber,
           enableText: false,
-          hintText: "البلد",
+          hintText: "رقم الضريبي",
           invisible: false,
           validator: null,
-          type: TextInputType.name,
+          type: TextInputType.number,
           inputFormat: null,
         ),
       ),
-      SizedBox(
-        height: context.screenHeight * 0.03,
-      ),
-      FormWidget(
-        formModel: FormModel(
-          controller: controller.country,
-          enableText: false,
-          hintText: "المحافظة",
-          invisible: false,
-          validator: null,
-          type: TextInputType.name,
-          inputFormat: null,
-        ),
-      )
     ]);
   }
 }

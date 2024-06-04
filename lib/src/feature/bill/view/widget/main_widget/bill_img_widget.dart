@@ -6,6 +6,7 @@ import 'package:tax_project/src/feature/bill/controller/bill_controller.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_form_page.dart';
 import 'package:tax_project/src/feature/bill/view/widget/collection_widgets/bill_pop_dialog.dart';
 import 'package:tax_project/src/feature/periods/view/widget/text_widget/period_text.dart';
+import 'package:tax_project/src/feature/register/view/widget/text_widget/register_text.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 
 class BillImgWiget extends StatelessWidget {
@@ -63,7 +64,7 @@ class BillImgWiget extends StatelessWidget {
               width: context.screenWidth * .9,
               height: context.screenHeight * .5,
               decoration: BoxDecoration(
-                  color: AppTheme.lightAppColors.background.withOpacity(.4),
+                  color: AppTheme.lightAppColors.background.withOpacity(.5),
                   borderRadius: BorderRadius.circular(15)),
               child: Obx(() {
                 final image = controller.image.value;
@@ -72,7 +73,14 @@ class BillImgWiget extends StatelessWidget {
                         image,
                         fit: BoxFit.cover,
                       )
-                    : Image.asset("assets/img/Paper Upload.png");
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/img/Paper Upload.png"),
+                          RegisterText.thirdIconText("أنقر لاختيار صورة")
+                        ],
+                      );
               }),
             ),
           ),

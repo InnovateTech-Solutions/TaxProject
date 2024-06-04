@@ -127,7 +127,7 @@ class _BillFormWidgetState extends State<BillFormWidget> {
                   enableText: false,
                   hintText: "رقم الفاتورة",
                   invisible: false,
-                  validator: (value) => controller.validation(value!),
+                  validator: null,
                   type: TextInputType.number,
                   inputFormat: null,
                 ),

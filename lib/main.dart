@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
-import 'package:tax_project/src/feature/dashboard/view/pages/dashboard_page.dart';
+import 'package:tax_project/src/feature/splash_screen/view/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale('ar'),
       title: 'Tax Project',
       theme: AppTheme.light,
-      home: const DashboardPage(),
+      home: const SplashPage(),
     );
   }
 }

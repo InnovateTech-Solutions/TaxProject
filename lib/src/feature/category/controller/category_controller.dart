@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:tax_project/src/feature/category/model/category_model.dart';
 
 class CategoryController extends GetxController {
-  List<int> percentages = [16, 10, 4];
+  List<double> percentages = [16.0, 10.0, 4.0, 0.0];
 
   List<CategoryModel> category = [
     CategoryModel(
@@ -10,9 +10,9 @@ class CategoryController extends GetxController {
       percentage: false,
     ),
     CategoryModel(
-        title: "المشتريات المحلية الخاضعة للضريبة بنسبة",
-        percentage: true,
-        percentageValue: [16, 12, 10, 0]),
+      title: "المشتريات المحلية الخاضعة للضريبة بنسبة",
+      percentage: true,
+    ),
     CategoryModel(title: "المستوردات الخاضعة للضريبة بنسبة", percentage: false),
     CategoryModel(title: "المستوردات مؤجلة توريد الضريبة", percentage: false),
     CategoryModel(title: 'لمشتريات والمستوردات المعفاة', percentage: false),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
+import 'package:tax_project/src/feature/dashboard/view/pages/dashboard_page.dart';
 import 'package:tax_project/src/feature/register/controller/register_controller.dart';
 import 'package:tax_project/src/feature/register/view/widget/main_widget/first_register_widget.dart';
 import 'package:tax_project/src/feature/register/view/widget/main_widget/sec_register_widget.dart';
@@ -8,13 +10,23 @@ import 'package:tax_project/src/feature/register/view/widget/text_widget/registe
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/steper_container.dart';
 
-class RegisterWidget extends StatelessWidget {
+class RegisterWidget extends StatefulWidget {
   const RegisterWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(RegisterController());
+  State<RegisterWidget> createState() => _RegisterWidgetState();
+}
 
+class _RegisterWidgetState extends State<RegisterWidget> {
+  final controller = Get.put(RegisterController());
+  @override
+  void initState() {
+    controller.loadFormData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: Container(
@@ -64,13 +76,20 @@ class RegisterWidget extends StatelessWidget {
                 ],
               ),
             ),
-            AppButton(
-                model: AppButtonModel(
-              title: "التالي",
-              onTap: () {
-                controller.nextPage();
-              },
-            ))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: AppButton(
+                  model: AppButtonModel(
+                title: "التالي",
+                onTap: () {
+                  controller.nextPage();
+                  controller.saveFormData();
+                  if (controller.currentPageIndex == 1) {
+                    Get.to(DashboardPage());
+                  }
+                },
+              )),
+            )
           ],
         ),
       ),

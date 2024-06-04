@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tax_project/src/config/themes/background.dart';
 import 'package:tax_project/src/feature/pre_category/view/widget/main/pre_category_widget.dart';
 
 class PreCategoryPage extends StatelessWidget {
@@ -10,12 +9,10 @@ class PreCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: backgroundColor(
-          PreCategoryWidget(
-            periods: periods,
-            year: year,
-          ),
-          context),
+      body: PreCategoryWidget(
+        periods: periods,
+        year: year,
+      ),
     ));
   }
 }

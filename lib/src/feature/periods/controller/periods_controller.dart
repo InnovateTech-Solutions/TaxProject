@@ -17,7 +17,7 @@ class PeriodsController extends GetxController {
   }
 
   List<String> oddList = [
-    "من  1 - 1 الى  28  او  27 - 2  ",
+    "من  1 - 1 الى  28  او  29 - 2  ",
     "من  1 - 3  الى  30 - 4",
     "من  1 - 5  الى  30 - 6",
     "من  1 - 7  الى  31 - 8",

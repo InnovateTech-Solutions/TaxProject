@@ -6,6 +6,9 @@ import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_img.dart';
 import 'package:tax_project/src/feature/category/model/category_model.dart';
 import 'package:tax_project/src/feature/periods/view/widget/text_widget/period_text.dart';
+import 'package:tax_project/src/feature/register/model/form_model.dart';
+import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
+import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_form.dart';
 
 class CategoryContainer extends StatelessWidget {
   const CategoryContainer({Key? key, required this.model}) : super(key: key);
@@ -39,11 +42,12 @@ class CategoryContainer extends StatelessWidget {
 
 Future<dynamic> percentageDialog(
   BuildContext context,
-  model,
   periods,
   year,
   category,
+  List<double> percentages,
 ) {
+  final value = TextEditingController();
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -51,47 +55,100 @@ Future<dynamic> percentageDialog(
         backgroundColor: AppTheme.lightAppColors.background,
         content: SizedBox(
           width: context.screenWidth,
-          height: context.screenHeight * 0.1 * model.percentageValue!.length,
-          child: ListView.separated(
-            itemCount: model.percentageValue!.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  Get.to(BillImgPage(
-                    periods: periods,
-                    year: year,
-                    category: category,
-                    equation: model.percentageValue![index],
-                    percentageValue: model.percentageValue![index],
-                  ));
-                },
-                child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    width: context.screenWidth,
-                    height: context.screenWidth * 0.15,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppTheme.lightAppColors.primary,
-                    ),
-                    child: Center(
-                      child: PeriodText.buttonText(
-                          model.percentageValue![index].toString()),
-                    )),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
+          height: 500,
+          child: Column(
+            children: [
+              SizedBox(
+                width: context.screenWidth,
+                height: context.screenHeight * 0.1 * percentages.length,
+                child: ListView.separated(
+                  itemCount: percentages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(BillImgPage(
+                          periods: periods,
+                          year: year,
+                          category: category,
+                          equation: percentages[index],
+                          percentageValue: percentages[index],
+                        ));
+                      },
+                      child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          width: context.screenWidth,
+                          height: context.screenWidth * 0.15,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppTheme.lightAppColors.primary,
+                          ),
+                          child: Center(
+                            child: PeriodText.buttonText(
+                                percentages[index].toString()),
+                          )),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: context.screenHeight * .03,
+                    );
+                  },
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  width: context.screenWidth,
+                  height: context.screenWidth * 0.15,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppTheme.lightAppColors.primary,
+                  ),
+                  child: FormWidget(
+                      formModel: FormModel(
+                          controller: value,
+                          enableText: false,
+                          hintText: "اخرى",
+                          invisible: false,
+                          validator: null,
+                          type: TextInputType.number,
+                          inputFormat: []))),
+              SizedBox(
                 height: context.screenHeight * .03,
-              );
-            },
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                width: context.screenWidth,
+                height: context.screenWidth * 0.15,
+                child: AppButton(
+                    model: AppButtonModel(
+                  title: "إضافة",
+                  onTap: () {
+                    Get.to(BillImgPage(
+                        periods: periods,
+                        year: year,
+                        category: category,
+                        equation: double.parse(value.text),
+                        percentageValue: double.parse(value.text)));
+                  },
+                )),
+              )
+            ],
           ),
         ),
       );

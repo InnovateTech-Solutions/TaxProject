@@ -57,8 +57,12 @@ class CategoeyWidget extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         if (controller.category[index].percentage!) {
-                          percentageDialog(context, controller.category[index],
-                              periods, year, controller.category[index].title);
+                          percentageDialog(
+                              context,
+                              periods,
+                              year,
+                              controller.category[index].title,
+                              controller.percentages);
                         } else {
                           Get.to(BillImgPage(
                             periods: periods,

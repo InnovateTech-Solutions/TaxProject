@@ -6,6 +6,7 @@ import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/periods/controller/periods_controller.dart';
 import 'package:tax_project/src/feature/periods/view/widget/text_widget/period_text.dart';
 import 'package:tax_project/src/feature/pre_category/view/pages/pre_category_page.dart';
+import 'package:tax_project/src/feature/tax_calculation/view/text/tax_text.dart';
 
 class ClassifiedPeriodsWidget extends StatelessWidget {
   const ClassifiedPeriodsWidget(
@@ -40,11 +41,10 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
               height: context.screenHeight * 0.05,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: context.screenWidth * 0.055,
-                ),
-                PeriodText.secText("الفترات"),
+                TaxText.thirdText(" الفترات"),
+                TaxText.thirdText(periods == "odd" ? " الفردية" : " الزوجية"),
               ],
             ),
             SizedBox(
@@ -59,10 +59,13 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.to(PreCategoryPage(
-                          periods: periods,
-                          year: year,
-                        ));
+                        Get.to(
+                            PreCategoryPage(
+                              periods: periods,
+                              year: year,
+                            ),
+                            transition: Transition.fade,
+                            duration: const Duration(milliseconds: 500));
                       },
                       child: periodContainer(
                           context,

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/feature/register/controller/register_controller.dart';
 import 'package:tax_project/src/feature/register/model/form_model.dart';
+import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_cities.dart';
+import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_country.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_form.dart';
 
 class SecRegisterWidget extends StatelessWidget {
@@ -13,47 +15,39 @@ class SecRegisterWidget extends StatelessWidget {
     final controller = Get.put(RegisterController());
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      FormWidget(
+      CityDropdownWidget(
         formModel: FormModel(
-          controller: controller.postalCode,
+          hintText: 'اختر مدينة',
           enableText: false,
-          hintText: "الرمز البريدي",
-          invisible: false,
+          inputFormat: [],
+          type: TextInputType.text,
           validator: null,
-          type: TextInputType.name,
-          inputFormat: null,
+          invisible: false,
+          controller: controller.governorate,
         ),
+        onTap: () {
+          print('City selected');
+        },
       ),
       SizedBox(
-        height: context.screenHeight * 0.03,
+        height: context.screenHeight * 0.06,
       ),
-      FormWidget(
+      CountryDropdownWidget(
         formModel: FormModel(
-          controller: controller.taxNumber,
+          hintText: 'اختر دولة',
           enableText: false,
-          hintText: "رقم الضريبي",
-          invisible: false,
+          inputFormat: [],
+          type: TextInputType.text,
           validator: null,
-          type: TextInputType.number,
-          inputFormat: null,
+          invisible: false,
+          controller: controller.country,
         ),
+        onTap: () {
+          print('Country selected');
+        },
       ),
       SizedBox(
-        height: context.screenHeight * 0.03,
-      ),
-      FormWidget(
-        formModel: FormModel(
-          controller: controller.ibanNumber,
-          enableText: false,
-          hintText: "رقم IBAN الخاص بالمكلف",
-          invisible: false,
-          validator: null,
-          type: TextInputType.name,
-          inputFormat: null,
-        ),
-      ),
-      SizedBox(
-        height: context.screenHeight * 0.03,
+        height: context.screenHeight * 0.06,
       ),
       FormWidget(
         formModel: FormModel(
