@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tax_project/src/config/database/db_controllers/bill_controller.dart';
+import 'package:tax_project/src/config/database/models/bill_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/bill/controller/bill_controller.dart';
@@ -27,7 +29,7 @@ class BillFormWidget extends StatefulWidget {
 }
 
 class _BillFormWidgetState extends State<BillFormWidget> {
-  final controller = Get.put(BillController());
+  final controller = Get.put(BbillController());
   void clearText() {
     controller.billImg.clear();
     controller.billDate.clear();
@@ -41,8 +43,8 @@ class _BillFormWidgetState extends State<BillFormWidget> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(
-        BillController()); // Move controller instantiation inside build method if it's specific to each widget instance
-
+        BbillController()); // Move controller instantiation inside build method if it's specific to each widget instance
+    final localBillController = Get.put(BillController());
     return Container(
       margin: const EdgeInsets.all(20),
       child: Form(
@@ -203,9 +205,23 @@ class _BillFormWidgetState extends State<BillFormWidget> {
                       title: "التالي",
                       onTap: () {
                         if (formKey.currentState!.validate()) {
+                          try {
+                            localBillController.addBill(Bill(
+                                id: 1,
+                                image: controller.image.value?.path,
+                                billNo: controller.billNumber.text,
+                                billValue: double.parse(
+                                  controller.billValue.text,
+                                ),
+                                taxValue: 122,
+                                date: controller.billDate.text));
+                          } catch (e) {
+                            print(e);
+                          }
                           controller.addImg();
                           controller.addBill(widget.category, widget.year);
                           controller.totalBill();
+
                           Get.to(BillPage(
                             year: widget.year,
                             category: widget.category,

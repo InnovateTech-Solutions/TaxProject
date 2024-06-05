@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tax_project/src/feature/category/model/category_model.dart';
 
-class BillController extends GetxController {
+class BbillController extends GetxController {
   RxList<File> billImgs = <File>[].obs;
   RxList<Bill> bills = <Bill>[].obs;
   RxList<CategoryModel> category = <CategoryModel>[].obs;

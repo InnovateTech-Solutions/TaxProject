@@ -7,7 +7,7 @@ import 'package:tax_project/src/feature/register/view/widget/text_widget/registe
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 
 void showPopupButtons(BuildContext context) {
-  final controller = Get.put(BillController());
+  final controller = Get.put(BbillController());
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     context: context,
