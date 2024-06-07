@@ -1,6 +1,8 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tax_project/src/config/database/db_controllers/tax_form_controller.dart';
+import 'package:tax_project/src/config/database/models/tax_form_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/periods/controller/periods_controller.dart';
@@ -16,6 +18,8 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localTaxFormController = Get.put(TaxFormController());
+
     final controller = Get.put(PeriodsController());
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 15),
@@ -58,11 +62,29 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await localTaxFormController
+                            .getTaxFormsByYearAndTaxPeriod(
+                          year,
+                          periods == "odd"
+                              ? controller.oddList[index]
+                              : controller.evenList[index],
+                        );
+                        if (localTaxFormController.taxForms.isEmpty) {
+                          localTaxFormController.addTaxForm(TaxForm(
+                              year: year,
+                              taxPeriod: periods == "odd"
+                                  ? controller.oddList[index]
+                                  : controller.evenList[index],
+                              userId: 5));
+                        }
                         Get.to(
                             PreCategoryPage(
                               periods: periods,
                               year: year,
+                              taxPeriod: periods == "odd"
+                                  ? controller.oddList[index]
+                                  : controller.evenList[index],
                             ),
                             transition: Transition.fade,
                             duration: const Duration(milliseconds: 500));

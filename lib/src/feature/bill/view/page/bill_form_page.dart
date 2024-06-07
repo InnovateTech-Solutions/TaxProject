@@ -3,13 +3,19 @@ import 'package:tax_project/src/config/themes/background.dart';
 import 'package:tax_project/src/feature/bill/view/widget/main_widget/bill_form_widget.dart';
 
 class BillFormPage extends StatelessWidget {
-  const BillFormPage(
-      {super.key,
-      required this.periods,
-      required this.year,
-      required this.img,
-      required this.equation,
-      required this.category});
+  const BillFormPage({
+    super.key,
+    required this.periods,
+    required this.year,
+    required this.img,
+    required this.equation,
+    required this.category,
+    required this.taxPeriod,
+    required this.categoryId,
+  });
+  final int categoryId;
+
+  final String taxPeriod;
   final String periods;
   final String year;
   final String img;
@@ -27,6 +33,8 @@ class BillFormPage extends StatelessWidget {
               img: img,
               category: category,
               equation: equation,
+              taxPeriod: taxPeriod,
+              categoryId: categoryId,
             ),
             context),
       ),

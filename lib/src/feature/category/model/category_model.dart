@@ -1,56 +1,58 @@
-import 'dart:io';
+// import 'dart:io';
 
-class TaxModel {
-  String year;
-  List<CategoryModel> category;
-  String? startDate;
-  String? endDate;
-  TaxModel(
-      {required this.year,
-      required this.category,
-      this.endDate,
-      this.startDate});
-}
+// import 'package:tax_project/src/config/database/models/bill_model.dart';
 
-class CategoryModel {
-  String title;
-  List<Bill>? bills;
-  double? totalValue;
-  double? taxValue;
-  double? equation;
-  bool? percentage;
-  List<double>? percentageValue;
+// class TaxModel {
+//   String year;
+//   List<CategoryModel> category;
+//   String? startDate;
+//   String? endDate;
+//   TaxModel(
+//       {required this.year,
+//       required this.category,
+//       this.endDate,
+//       this.startDate});
+// }
 
-  CategoryModel(
-      {required this.title,
-      this.equation,
-      this.percentageValue,
-      this.percentage,
-      this.taxValue,
-      this.totalValue,
-      this.bills});
-}
+// class CategoryModel {
+//   String title;
+//   List<Bill>? bills;
+//   double? totalValue;
+//   double? taxValue;
+//   double? equation;
+//   bool? percentage;
+//   List<double>? percentageValue;
 
-class Bill {
-  int id;
-  File? img;
-  int billNumber;
-  int billValue;
-  double? taxValue;
-  String type;
-  String year;
+//   CategoryModel(
+//       {required this.title,
+//       this.equation,
+//       this.percentageValue,
+//       this.percentage,
+//       this.taxValue,
+//       this.totalValue,
+//       this.bills});
+// }
 
-  String billDate;
-  int? vendorTaxNumber;
+// // class Bill {
+// //   int id;
+// //   File? img;
+// //   int billNumber;
+// //   int billValue;
+// //   double? taxValue;
+// //   String type;
+// //   String year;
 
-  Bill({
-    required this.id,
-    required this.type,
-    required this.img,
-    required this.year,
-    required this.billDate,
-    this.taxValue = 0.0,
-    required this.billNumber,
-    required this.billValue,
-  });
-}
+// //   String billDate;
+// //   int? vendorTaxNumber;
+
+// //   Bill({
+// //     required this.id,
+// //     required this.type,
+// //     required this.img,
+// //     required this.year,
+// //     required this.billDate,
+// //     this.taxValue = 0.0,
+// //     required this.billNumber,
+// //     required this.billValue,
+// //   });
+// // }

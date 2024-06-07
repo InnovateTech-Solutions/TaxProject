@@ -1,7 +1,8 @@
-import 'package:sqflite/sqflite.dart';
+import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:io';
+import 'package:sqflite/sqflite.dart';
 
 class DBHelper {
   static Database? _database;
@@ -19,12 +20,14 @@ class DBHelper {
     Directory? documentsDirectory = await getExternalStorageDirectory();
     String path = join(documentsDirectory!.path, 'custom_directory', 'tax.db');
     print("########################################### path: $path");
+
     // Ensure the directory exists
-    await Directory(join(documentsDirectory.path, 'custom_directory')).create(recursive: true);
+    await Directory(join(documentsDirectory.path, 'custom_directory'))
+        .create(recursive: true);
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2, // Make sure to set the correct version
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE Users (
@@ -56,10 +59,12 @@ class DBHelper {
         await db.execute('''
           CREATE TABLE Category (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
             equation TEXT,
             taxPeriod TEXT,
             taxPercentage REAL,
             taxFormId INTEGER,
+            categoryId INTEGER, -- New field
             FOREIGN KEY (taxFormId) REFERENCES TaxForm (id)
           )
         ''');
@@ -85,8 +90,13 @@ class DBHelper {
           )
         ''');
       },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          // Add the new column to the existing Category table
+          await db
+              .execute('ALTER TABLE Category ADD COLUMN categoryId INTEGER');
+        }
+      },
     );
   }
-
-  // CRUD operations for each table
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tax_project/src/config/database/models/bill_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/bill/view/text/bill_text.dart';
-
-import '../../../../category/model/category_model.dart';
 
 Future<dynamic> showBill(BuildContext context, Bill bill) {
   // final controller = Get.put(BillController());
@@ -31,10 +30,12 @@ Future<dynamic> showBill(BuildContext context, Bill bill) {
               Row(
                 children: [
                   BillText.thirdText("#"),
-                  BillText.secText(bill.billNumber.toString())
+                  BillText.secText(bill.billNo.toString())
                 ],
               ),
-              Image.file(bill.img!),
+              // ClipRRect(
+              //     borderRadius: BorderRadius.circular(10),
+              //     child: Image.file(bill.image)),
               SizedBox(
                 height: context.screenHeight * 0.02,
               ),
@@ -50,7 +51,7 @@ Future<dynamic> showBill(BuildContext context, Bill bill) {
               Row(
                 children: [
                   BillText.thirdText("تاريخ الفاتورة : "),
-                  BillText.secText(bill.billDate.toString())
+                  BillText.secText(bill.date.toString())
                 ],
               ),
               SizedBox(

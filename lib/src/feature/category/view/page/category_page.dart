@@ -3,7 +3,13 @@ import 'package:tax_project/src/config/themes/background.dart';
 import 'package:tax_project/src/feature/category/view/widget/main_widget/category_widget.dart';
 
 class CategoryPage extends StatelessWidget {
-  const CategoryPage({super.key, required this.periods, required this.year});
+  const CategoryPage({
+    super.key,
+    required this.periods,
+    required this.year,
+    required this.taxPeriod,
+  });
+  final String taxPeriod;
   final String periods;
   final String year;
   @override
@@ -14,6 +20,7 @@ class CategoryPage extends StatelessWidget {
               CategoeyWidget(
                 periods: periods,
                 year: year,
+                taxPeriod: taxPeriod,
               ),
               context)),
     );

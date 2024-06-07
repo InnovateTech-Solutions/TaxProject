@@ -1,18 +1,26 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tax_project/src/config/database/models/category_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_img.dart';
-import 'package:tax_project/src/feature/category/model/category_model.dart';
 import 'package:tax_project/src/feature/periods/view/widget/text_widget/period_text.dart';
 import 'package:tax_project/src/feature/register/model/form_model.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_form.dart';
 
 class CategoryContainer extends StatelessWidget {
-  const CategoryContainer({Key? key, required this.model}) : super(key: key);
-  final CategoryModel model;
+  const CategoryContainer({
+    super.key,
+    required this.model,
+    required this.taxPeriod,
+    required this.categoryId,
+  });
+  final int categoryId;
+
+  final String taxPeriod;
+  final Category model;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,7 @@ class CategoryContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: AppTheme.lightAppColors.primary,
         ),
-        child: Center(child: PeriodText.buttonText(model.title)),
+        child: Center(child: PeriodText.buttonText(model.title!)),
       ),
     );
   }
@@ -46,6 +54,8 @@ Future<dynamic> percentageDialog(
   year,
   category,
   List<double> percentages,
+  String taxPeriod,
+  categoryId,
 ) {
   final value = TextEditingController();
   return showDialog(
@@ -72,6 +82,8 @@ Future<dynamic> percentageDialog(
                           category: category,
                           equation: percentages[index],
                           percentageValue: percentages[index],
+                          taxPeriod: taxPeriod,
+                          categoryId: categoryId,
                         ));
                       },
                       child: Container(
@@ -140,11 +152,14 @@ Future<dynamic> percentageDialog(
                   title: "إضافة",
                   onTap: () {
                     Get.to(BillImgPage(
-                        periods: periods,
-                        year: year,
-                        category: category,
-                        equation: double.parse(value.text),
-                        percentageValue: double.parse(value.text)));
+                      periods: periods,
+                      year: year,
+                      category: category,
+                      equation: double.parse(value.text),
+                      percentageValue: double.parse(value.text),
+                      taxPeriod: taxPeriod,
+                      categoryId: categoryId,
+                    ));
                   },
                 )),
               )

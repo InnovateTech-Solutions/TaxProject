@@ -10,12 +10,18 @@ import 'package:tax_project/src/feature/register/view/widget/text_widget/registe
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 
 class BillImgWiget extends StatelessWidget {
-  const BillImgWiget(
-      {super.key,
-      required this.periods,
-      required this.year,
-      required this.equation,
-      required this.category});
+  const BillImgWiget({
+    super.key,
+    required this.periods,
+    required this.year,
+    required this.equation,
+    required this.category,
+    required this.taxPeriod,
+    required this.categoryId,
+  });
+  final int categoryId;
+
+  final String taxPeriod;
   final String periods;
   final String year;
   final double equation;
@@ -106,6 +112,8 @@ class BillImgWiget extends StatelessWidget {
                             img: controller.image.value.toString(),
                             category: category,
                             equation: equation,
+                            taxPeriod: taxPeriod,
+                            categoryId: categoryId,
                           ));
                         }
                       })))

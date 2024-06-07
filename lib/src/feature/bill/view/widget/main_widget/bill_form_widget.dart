@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tax_project/src/config/database/db_controllers/bill_controller.dart';
+import 'package:tax_project/src/config/database/db_controllers/category_controller.dart';
+import 'package:tax_project/src/config/database/db_controllers/tax_form_controller.dart';
 import 'package:tax_project/src/config/database/models/bill_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/bill/controller/bill_controller.dart';
+import 'package:tax_project/src/feature/bill/view/page/bill_page.dart';
 import 'package:tax_project/src/feature/register/model/form_model.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/register_form.dart';
 
 class BillFormWidget extends StatefulWidget {
-  const BillFormWidget(
-      {super.key,
-      required this.periods,
-      required this.year,
-      required this.img,
-      required this.equation,
-      required this.category});
+  const BillFormWidget({
+    super.key,
+    required this.periods,
+    required this.year,
+    required this.img,
+    required this.equation,
+    required this.category,
+    required this.categoryId,
+    required this.taxPeriod,
+  });
+  final String taxPeriod;
+  final int categoryId;
   final String periods;
   final String year;
   final String img;
@@ -42,7 +50,9 @@ class _BillFormWidgetState extends State<BillFormWidget> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(BbillController());
-    final localBillController = Get.put(BillController());
+    final localBillController = Get.put(LocalBillController());
+    final localTaxFormController = Get.put(TaxFormController());
+    final localCategoryController = Get.put(LocalCategoryController());
     return Container(
       margin: const EdgeInsets.all(20),
       child: Form(
@@ -200,11 +210,26 @@ class _BillFormWidgetState extends State<BillFormWidget> {
               ),
               AppButton(
                   model: AppButtonModel(
-                      title: "التالي",
+                      title: "title",
                       onTap: () {
+                        localBillController.getBills();
+                      })),
+              AppButton(
+                  model: AppButtonModel(
+                      title: "التالي",
+                      onTap: () async {
+                        print(widget.taxPeriod);
                         if (formKey.currentState!.validate()) {
                           try {
+                            print("catgoooryyy iiidddd ${widget.categoryId}");
+                            await localCategoryController.getCategoryByDetails(
+                                localTaxFormController.taxID.value,
+                                widget.categoryId,
+                                widget.category);
+
                             localBillController.addBill(Bill(
+                                categoryId: localCategoryController
+                                    .categoryFormId.value,
                                 image: controller.image.value?.path,
                                 billNo: controller.billNumber.text,
                                 billValue: double.parse(
@@ -218,12 +243,14 @@ class _BillFormWidgetState extends State<BillFormWidget> {
                           // controller.addImg();
                           // controller.addBill(widget.category, widget.year);
                           // controller.totalBill();
-                          // Get.to(BillPage(
-                          //   year: widget.year,
-                          //   category: widget.category,
-                          //   periods: widget.periods,
-                          //   equation: widget.equation,
-                          // ));
+                          Get.offAll(BillPage(
+                            year: widget.year,
+                            category: widget.category,
+                            periods: widget.periods,
+                            equation: widget.equation,
+                            taxPeriod: '',
+                            categoryId: widget.categoryId,
+                          ));
                           // clearText();
                         }
                       }))

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tax_project/src/config/database/db_controllers/bill_controller.dart';
+import 'package:tax_project/src/config/database/db_controllers/category_controller.dart';
+import 'package:tax_project/src/config/database/models/bill_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
 import 'package:tax_project/src/feature/bill/controller/bill_controller.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_img.dart';
 import 'package:tax_project/src/feature/bill/view/widget/collection_widgets/bill_dialog.dart';
-import 'package:tax_project/src/feature/category/model/category_model.dart';
 import 'package:tax_project/src/feature/dashboard/view/pages/dashboard_page.dart';
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 
@@ -16,7 +18,12 @@ class BillWidget extends StatefulWidget {
     required this.category,
     required this.periods,
     required this.equation,
+    required this.taxPeriod,
+    required this.categoryId,
   });
+
+  final int categoryId;
+  final String taxPeriod;
   final String year;
   final String category;
   final String periods;
@@ -27,21 +34,32 @@ class BillWidget extends StatefulWidget {
 }
 
 class _BillWidgetState extends State<BillWidget> {
-  Future<void> addBillsCategory() async {}
+  final controller = Get.put(BbillController());
+  final localBillController = Get.put(LocalBillController());
+  final localCategoryController = Get.put(LocalCategoryController());
+  RxList<Bill> bills = <Bill>[].obs;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeBills();
+  }
+
+  Future<void> initializeBills() async {
+    await localBillController
+        .getBillsByCategoryId(localCategoryController.categoryFormId.value);
+    setState(() {
+      bills = localBillController.bills;
+    });
+  }
+
+  Future<void> deleteBill(int billId) async {
+    await localBillController.deleteBill(billId);
+    await initializeBills(); // Refresh the bills list after deletion
+  }
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BbillController());
-
-    // List<CategoryModel> category = controller.category
-    //     .where((cat) => cat.title == widget.category)
-    //     .toList();
-
-    List<Bill> bills = controller.bills
-        .where(
-            (bill) => bill.type == widget.category && bill.year == widget.year)
-        .toList();
-
     return Container(
       margin: const EdgeInsets.only(top: 20),
       width: double.infinity,
@@ -53,9 +71,9 @@ class _BillWidgetState extends State<BillWidget> {
             width: context.screenWidth * .7,
             height: context.screenHeight * 0.06,
             decoration: BoxDecoration(
-                color: AppTheme.lightAppColors.primary,
-                borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(12))),
+              color: AppTheme.lightAppColors.primary,
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
+            ),
             child: GestureDetector(
               onTap: () {
                 // Get.to(BillImgPage(
@@ -66,10 +84,11 @@ class _BillWidgetState extends State<BillWidget> {
                   Text(
                     "  المجموع ${controller.total.value.toString()} دينار",
                     style: TextStyle(
-                        color: AppTheme.lightAppColors.background,
-                        fontSize: 25,
-                        fontFamily: 'Poppins-Regular'),
-                  )
+                      color: AppTheme.lightAppColors.background,
+                      fontSize: 25,
+                      fontFamily: 'Poppins-Regular',
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -95,24 +114,31 @@ class _BillWidgetState extends State<BillWidget> {
                     width: context.screenWidth * .7,
                     height: context.screenHeight * 0.08,
                     decoration: BoxDecoration(
-                        color: AppTheme.lightAppColors.primary,
-                        borderRadius: BorderRadius.circular(12)),
+                      color: AppTheme.lightAppColors.primary,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          bills[index].billDate.toString(),
+                          bills[index].date.toString(),
                           style: TextStyle(
-                              color: AppTheme.lightAppColors.background,
-                              fontSize: 25,
-                              fontFamily: 'Poppins-Regular'),
+                            color: AppTheme.lightAppColors.background,
+                            fontSize: 25,
+                            fontFamily: 'Poppins-Regular',
+                          ),
                         ),
                         Text(
                           "# ${bills[index].billValue.toString()}",
                           style: TextStyle(
-                              color: AppTheme.lightAppColors.background,
-                              fontSize: 25,
-                              fontFamily: 'Poppins-Regular'),
+                            color: AppTheme.lightAppColors.background,
+                            fontSize: 25,
+                            fontFamily: 'Poppins-Regular',
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => deleteBill(bills[index].id!),
                         ),
                       ],
                     ),
@@ -129,40 +155,47 @@ class _BillWidgetState extends State<BillWidget> {
           GestureDetector(
             onTap: () {
               Get.to(BillImgPage(
-                  periods: widget.periods,
-                  year: widget.year,
-                  equation: widget.equation,
-                  category: widget.category));
+                periods: widget.periods,
+                year: widget.year,
+                equation: widget.equation,
+                category: widget.category,
+                taxPeriod: widget.taxPeriod,
+                categoryId: widget.categoryId,
+              ));
             },
             child: Container(
-                margin: EdgeInsets.only(right: 30),
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                    color: Color(0xffA1BFE1),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Icon(
-                  Icons.add,
-                  color: AppTheme.lightAppColors.background,
-                )),
+              margin: EdgeInsets.only(right: 30),
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+                color: Color(0xffA1BFE1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Icon(
+                Icons.add,
+                color: AppTheme.lightAppColors.background,
+              ),
+            ),
           ),
           Padding(
-              padding: EdgeInsets.all(20),
-              child: AppButton(
-                model: AppButtonModel(
-                    title: "التالي",
-                    onTap: () {
-                      Get.to(DashboardPage());
-                    }),
-              ))
+            padding: EdgeInsets.all(20),
+            child: AppButton(
+              model: AppButtonModel(
+                title: "التالي",
+                onTap: () {
+                  Get.to(DashboardPage());
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tax_project/src/config/database/db_controllers/category_controller.dart';
+import 'package:tax_project/src/config/database/db_controllers/tax_form_controller.dart';
+import 'package:tax_project/src/config/database/models/category_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_img.dart';
 import 'package:tax_project/src/feature/category/controller/category_controller.dart';
@@ -9,12 +12,46 @@ import '../../../../../config/themes/theme.dart';
 import '../../../../periods/view/widget/text_widget/period_text.dart';
 
 class CategoeyWidget extends StatelessWidget {
-  const CategoeyWidget({super.key, required this.periods, required this.year});
+  const CategoeyWidget({
+    super.key,
+    required this.periods,
+    required this.year,
+    required this.taxPeriod,
+  });
+  final String taxPeriod;
   final String periods;
   final String year;
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CategoryController());
+    final localCategoryController = Get.put(LocalCategoryController());
+    final localTaxFormController = Get.put(TaxFormController());
+
+    Future<void> addCategory(index) async {
+      await localCategoryController.getCategoryByDetails(
+          localTaxFormController.taxID.value,
+          controller.category[index].id!,
+          controller.category[index].title!);
+      final category = localCategoryController.categories;
+      if (category.isEmpty) {
+        print("its null");
+        localCategoryController.addCategory(Category(
+            taxFormId: localTaxFormController.taxID.value,
+            title: controller.category[index].title,
+            categoryId: controller.category[index].id));
+      } else {
+        print("its not null");
+      }
+      Get.to(BillImgPage(
+        periods: periods,
+        year: year,
+        category: controller.category[index].title!,
+        equation: 0,
+        taxPeriod: taxPeriod,
+        categoryId: controller.category[index].id!,
+      ));
+    }
+
     return Container(
       margin: const EdgeInsets.only(top: 15),
       child: SingleChildScrollView(
@@ -55,25 +92,31 @@ class CategoeyWidget extends StatelessWidget {
               child: ListView.separated(
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () {
-                        if (controller.category[index].percentage!) {
+                      onTap: () async {
+                        localTaxFormController.getTaxFormsByYearAndTaxPeriod(
+                            year, taxPeriod);
+                        if (controller.category[index].id == 4) {
+                          addCategory(index);
+                        } else if (controller.category[index].id == 2 ||
+                            controller.category[index].id == 3 ||
+                            controller.category[index].id == 6) {
                           percentageDialog(
-                              context,
-                              periods,
-                              year,
-                              controller.category[index].title,
-                              controller.percentages);
+                            context,
+                            periods,
+                            year,
+                            controller.category[index].title,
+                            controller.percentages,
+                            taxPeriod,
+                            controller.category[index].id!,
+                          );
                         } else {
-                          Get.to(BillImgPage(
-                            periods: periods,
-                            year: year,
-                            category: controller.category[index].title,
-                            equation: 0,
-                          ));
+                          addCategory(index);
                         }
                       },
                       child: CategoryContainer(
                         model: controller.category[index],
+                        taxPeriod: taxPeriod,
+                        categoryId: controller.category[index].id!,
                       ),
                     );
                   },

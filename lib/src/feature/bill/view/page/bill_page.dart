@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:tax_project/src/feature/bill/view/widget/main_widget/bill_widget.dart';
 
 class BillPage extends StatelessWidget {
-  const BillPage(
-      {super.key,
-      required this.year,
-      required this.category,
-      required this.equation,
-      required this.periods});
+  const BillPage({
+    super.key,
+    required this.year,
+    required this.category,
+    required this.equation,
+    required this.periods,
+    required this.taxPeriod,
+    required this.categoryId,
+  });
+  final int categoryId;
+
+  final String taxPeriod;
   final String year;
   final double equation;
 
@@ -33,6 +39,8 @@ class BillPage extends StatelessWidget {
               category: category,
               periods: periods,
               equation: equation,
+              taxPeriod: taxPeriod,
+              categoryId: categoryId,
             )),
       ),
     );

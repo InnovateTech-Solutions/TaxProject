@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tax_project/src/feature/category/model/category_model.dart';
+import 'package:tax_project/src/config/database/models/bill_model.dart';
+import 'package:tax_project/src/config/database/models/category_model.dart';
+import 'package:tax_project/src/config/database/models/tax_form_model.dart';
 
 class BbillController extends GetxController {
   RxList<File> billImgs = <File>[].obs;
   RxList<Bill> bills = <Bill>[].obs;
-  RxList<CategoryModel> category = <CategoryModel>[].obs;
-  RxList<TaxModel> tax = <TaxModel>[].obs;
+  RxList<Category> category = <Category>[].obs;
+  RxList<TaxForm> tax = <TaxForm>[].obs;
 
   final picker = ImagePicker();
   Rx<File?> image = Rx<File?>(null);
@@ -33,6 +35,7 @@ class BbillController extends GetxController {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       image.value = File(pickedFile.path);
+      print(image.value);
     }
   }
 
@@ -51,31 +54,31 @@ class BbillController extends GetxController {
     taxVlaue.value = double.tryParse(billValue.text)! * (equation);
   }
 
-  Future<void> addBill(String type, year) async {
-    Bill bill = Bill(
-      id: 2,
-      img: image.value,
-      billNumber: int.parse(billNumber.text),
-      billValue: int.parse(billValue.text),
-      billDate: billDate.text,
-      type: type,
-      year: year,
-    );
-    bills.add(bill);
-    image.value = null; // Reset the image after adding the bill
+  // Future<void> addBill(String type, year) async {
+  //   Bill bill = Bill(
+  //     id: 2,
+  //     img: image.value,
+  //     billNumber: int.parse(billNumber.text),
+  //     billValue: int.parse(billValue.text),
+  //     billDate: billDate.text,
+  //     type: type,
+  //     year: year,
+  //   );
+  //   bills.add(bill);
+  //   image.value = null; // Reset the image after adding the bill
 
-    // image.value != null;
-  }
+  //   // image.value != null;
+  // }
 
-  Future<void> addCategory(CategoryModel cat) async {
-    category.add(cat);
-  }
+  // Future<void> addCategory(CategoryModel cat) async {
+  //   category.add(cat);
+  // }
 
-  Future<void> totalBill() async {
-    double sum = 0;
-    for (var bill in bills) {
-      sum += bill.billValue;
-    }
-    total.value = sum;
-  }
+  // Future<void> totalBill() async {
+  //   double sum = 0;
+  //   for (var bill in bills) {
+  //     sum += bill.billValue;
+  //   }
+  //   total.value = sum;
+  // }
 }

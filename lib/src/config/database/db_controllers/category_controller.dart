@@ -1,14 +1,20 @@
 import 'package:get/get.dart';
+
 import '../db_helper.dart';
 import '../models/category_model.dart';
 
-class CategoryController extends GetxController {
+class LocalCategoryController extends GetxController {
   var categories = <Category>[].obs;
+  var selectedCategory =
+      Rxn<Category>(); // Observable property to hold the selected category
+  RxInt categoryFormId = 0.obs;
   DBHelper dbHelper = DBHelper.dbHelper;
 
   Future<void> addCategory(Category category) async {
     final db = await dbHelper.database;
     await db.insert('Category', category.toMap());
+    print("=======================================");
+    print("add");
     getCategories();
   }
 
@@ -22,13 +28,51 @@ class CategoryController extends GetxController {
 
   Future<void> updateCategory(Category category) async {
     final db = await dbHelper.database;
-    await db.update('Category', category.toMap(), where: 'id = ?', whereArgs: [category.id]);
-    getCategories();
+    await db.update('Category', category.toMap(),
+        where: 'id = ?', whereArgs: [category.id]);
+    await getCategories();
   }
 
   Future<void> deleteCategory(int id) async {
     final db = await dbHelper.database;
     await db.delete('Category', where: 'id = ?', whereArgs: [id]);
-    getCategories();
+    await getCategories();
   }
+
+  Future<Category?> getCategoryByDetails(
+      int taxFormId, int categoryId, String title) async {
+    final db = await dbHelper.database;
+    categories.clear();
+    final List<Map<String, dynamic>> result = await db.query(
+      'Category',
+      where: 'taxFormId = ? AND categoryId = ?',
+      whereArgs: [taxFormId, categoryId],
+    );
+    if (result.isNotEmpty) {
+      categories.value = List.generate(result.length, (i) {
+        return Category.fromMap(result[i]);
+      });
+      for (var x in categories) {
+        // taxID.value = x.id!;
+        // print(taxID.value);
+        print(" ID: ${x.id}");
+        print("title: --> ${x.title}");
+        print("taxid: ${x.taxFormId}");
+        categoryFormId.value = x.categoryId!;
+        print(", categoryId id ${x.categoryId}");
+      }
+      selectedCategory.value = Category.fromMap(result.first);
+      return Category.fromMap(result.first);
+    } else {
+      return null;
+    }
+  }
+
+  // New method to fetch and set the selected category
+  // Future<void> fetchAndSetCategory(
+  //     int taxFormId, int categoryId, String title) async {
+  //   print("form id $taxFormId, category id : $categoryId title: $title");
+  //   final category = await getCategoryByDetails(taxFormId, categoryId, title);
+  //   selectedCategory.value = category; // Set the observable property
+  // }
 }

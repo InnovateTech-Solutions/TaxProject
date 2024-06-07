@@ -10,8 +10,13 @@ import 'package:tax_project/src/feature/tax_calculation/controller/tax_calculati
 import 'package:tax_project/src/feature/tax_calculation/view/text/tax_text.dart';
 
 class TaxCalculationWidget extends StatelessWidget {
-  const TaxCalculationWidget(
-      {super.key, required this.periods, required this.year});
+  const TaxCalculationWidget({
+    super.key,
+    required this.periods,
+    required this.year,
+    required this.taxPeriod,
+  });
+  final String taxPeriod;
   final String periods;
   final String year;
   @override
@@ -170,6 +175,7 @@ class TaxCalculationWidget extends StatelessWidget {
                     Get.to(PreCategoryWidget(
                       periods: periods,
                       year: year,
+                      taxPeriod: taxPeriod,
                     ));
                   },
                 )))

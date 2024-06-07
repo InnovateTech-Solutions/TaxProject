@@ -1,30 +1,61 @@
 import 'package:get/get.dart';
-import 'package:tax_project/src/feature/category/model/category_model.dart';
+import 'package:tax_project/src/config/database/models/category_model.dart';
 
 class CategoryController extends GetxController {
   List<double> percentages = [16.0, 10.0, 4.0, 0.0];
 
-  List<CategoryModel> category = [
-    CategoryModel(
+  List<Category> category = [
+    Category(
+      id: 4,
       title: "الرصيد المدور من الفترة السابقة",
-      percentage: false,
     ),
-    CategoryModel(
+    Category(
+      id: 2,
       title: "المشتريات المحلية الخاضعة للضريبة بنسبة",
-      percentage: true,
     ),
-    CategoryModel(title: "المستوردات الخاضعة للضريبة بنسبة", percentage: false),
-    CategoryModel(title: "المستوردات مؤجلة توريد الضريبة", percentage: false),
-    CategoryModel(title: 'لمشتريات والمستوردات المعفاة', percentage: false),
-    CategoryModel(title: "المبيعات المحلية الخاضعة لنسبة ", percentage: false),
-    CategoryModel(
-        title: "المبيعات المحلية الخاضعة لنسبة صفر", percentage: false),
-    CategoryModel(title: "المبيعات المصدرة", percentage: false),
-    CategoryModel(title: "لمبيعات غير الخاضعة للضريبة", percentage: false),
-    CategoryModel(title: "المبيعات المحلية المعفاة", percentage: false),
-    CategoryModel(
-        title: "ضريبة غير قابلة للخصم ( تخص مبيعات معفاة )", percentage: false),
-    CategoryModel(title: "حركة تعديل لصالح المسجل", percentage: false),
-    CategoryModel(title: "حركة تعديل لصالح الدائرة", percentage: false),
+    Category(
+      id: 3,
+      title: "المستوردات الخاضعة للضريبة بنسبة",
+    ),
+    Category(
+      id: 1,
+      title: "المستوردات مؤجلة توريد الضريبة",
+    ),
+    Category(
+      id: 5,
+      title: 'لمشتريات والمستوردات المعفاة',
+    ),
+    Category(
+      id: 6,
+      title: "المبيعات المحلية الخاضعة لنسبة ",
+    ),
+    Category(
+      id: 7,
+      title: "المبيعات المحلية الخاضعة لنسبة صفر",
+    ),
+    Category(
+      id: 8,
+      title: "المبيعات المصدرة",
+    ),
+    Category(
+      id: 9,
+      title: "لمبيعات غير الخاضعة للضريبة",
+    ),
+    Category(
+      id: 10,
+      title: "المبيعات المحلية المعفاة",
+    ),
+    Category(
+      id: 11,
+      title: "ضريبة غير قابلة للخصم ( تخص مبيعات معفاة )",
+    ),
+    Category(
+      id: 12,
+      title: "حركة تعديل لصالح المسجل",
+    ),
+    Category(
+      id: 14,
+      title: "حركة تعديل لصالح الدائرة",
+    ),
   ];
 }
