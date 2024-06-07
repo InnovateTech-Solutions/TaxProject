@@ -224,7 +224,6 @@
 //   }
 // }
 
-
 // class AppTheme {
 //   static final lightAppColors = _AppColors();
 // }
@@ -257,3 +256,165 @@
 //   final bool invisible;
 //   final TextEditingController controller;
 // }
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tax_project/src/config/database/db_controllers/bill_controller.dart';
+import 'package:tax_project/src/config/database/models/bill_model.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      home: BillView(),
+    );
+  }
+}
+
+class BillView extends StatelessWidget {
+  final BillController billController = Get.put(BillController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Bills'),
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 600,
+            child: Obx(() {
+              if (billController.bills.isEmpty) {
+                return const Center(child: Text('No bills available'));
+              }
+              return ListView.builder(
+                itemCount: billController.bills.length,
+                itemBuilder: (context, index) {
+                  final bill = billController.bills[index];
+                  return ListTile(
+                    leading: bill.image != null
+                        ? Image.network(bill.image!)
+                        : Icon(Icons.receipt),
+                    title: Text('Bill No: ${bill.billNo}'),
+                    subtitle: Text(
+                        'Value: ${bill.billValue}, Tax: ${bill.taxValue}, Date: ${bill.date}, Category: ${bill.categoryId}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () => _showBillDialog(context, bill: bill),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => billController.deleteBill(bill.id!),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }),
+          ),
+          ElevatedButton(
+            onPressed: () => _showBillDialog(context),
+            child: Text('Add Bill'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showBillDialog(BuildContext context, {Bill? bill}) {
+    final imageController = TextEditingController(text: bill?.image ?? '');
+    final billNoController = TextEditingController(text: bill?.billNo ?? '');
+    final billValueController =
+        TextEditingController(text: bill?.billValue?.toString() ?? '');
+    final taxValueController =
+        TextEditingController(text: bill?.taxValue?.toString() ?? '');
+    final dateController = TextEditingController(text: bill?.date ?? '');
+    final categoryIdController =
+        TextEditingController(text: bill?.categoryId?.toString() ?? '');
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(bill == null ? 'Add Bill' : 'Edit Bill'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: imageController,
+                  decoration: InputDecoration(labelText: 'Image URL'),
+                ),
+                TextField(
+                  controller: billNoController,
+                  decoration: InputDecoration(labelText: 'Bill No'),
+                ),
+                TextField(
+                  controller: billValueController,
+                  decoration: InputDecoration(labelText: 'Bill Value'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: taxValueController,
+                  decoration: InputDecoration(labelText: 'Tax Value'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: dateController,
+                  decoration: InputDecoration(labelText: 'Date'),
+                ),
+                TextField(
+                  controller: categoryIdController,
+                  decoration: InputDecoration(labelText: 'Category ID'),
+                  keyboardType: TextInputType.number,
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (bill == null) {
+                  final newBill = Bill(
+                    image: imageController.text,
+                    billNo: billNoController.text,
+                    billValue: double.tryParse(billValueController.text) ?? 0.0,
+                    taxValue: double.tryParse(taxValueController.text) ?? 0.0,
+                    date: dateController.text,
+                    categoryId: int.tryParse(categoryIdController.text),
+                  );
+                  billController.addBill(newBill);
+                } else {
+                  final updatedBill = Bill(
+                    id: bill.id,
+                    image: imageController.text,
+                    billNo: billNoController.text,
+                    billValue: double.tryParse(billValueController.text) ?? 0.0,
+                    taxValue: double.tryParse(taxValueController.text) ?? 0.0,
+                    date: dateController.text,
+                    categoryId: int.tryParse(categoryIdController.text),
+                  );
+                  billController.updateBill(updatedBill);
+                }
+                Navigator.of(context).pop();
+              },
+              child: Text(bill == null ? 'Add' : 'Update'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

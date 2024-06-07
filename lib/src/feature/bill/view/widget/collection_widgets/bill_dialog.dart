@@ -59,7 +59,7 @@ Future<dynamic> showBill(BuildContext context, Bill bill) {
               Row(
                 children: [
                   BillText.thirdText("القيمة الضريبية : "),
-                  BillText.secText(bill.taxValue.toString() ?? "لا يوجد قيمة")
+                  BillText.secText(bill.taxValue.toString())
                 ],
               ),
             ],

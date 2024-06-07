@@ -9,7 +9,7 @@ class SearchPgae extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SearchController());
+    // final controller = Get.put(SearchController());
     return SafeArea(
       child: Scaffold(
         body: Container(

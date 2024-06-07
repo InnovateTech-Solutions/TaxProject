@@ -49,7 +49,7 @@ class _CityDropdownWidgetState extends State<CityDropdownWidget> {
         ),
         child: DropdownButtonFormField<String>(
           value: selectedCity,
-          hint: Text(widget.formModel.hintText ?? 'اختر مدينة'),
+          hint: Text(widget.formModel.hintText),
           decoration: InputDecoration(
             filled: true,
             fillColor: AppTheme.lightAppColors.background,

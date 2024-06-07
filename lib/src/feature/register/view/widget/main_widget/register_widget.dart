@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:tax_project/src/config/database/db_controllers/user_controller.dart';
+import 'package:tax_project/src/config/database/models/user_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/feature/dashboard/view/pages/dashboard_page.dart';
 import 'package:tax_project/src/feature/register/controller/register_controller.dart';
@@ -19,6 +21,8 @@ class RegisterWidget extends StatefulWidget {
 
 class _RegisterWidgetState extends State<RegisterWidget> {
   final controller = Get.put(RegisterController());
+  final UserController userController = Get.put(UserController());
+
   @override
   void initState() {
     controller.loadFormData();
@@ -84,7 +88,15 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 onTap: () {
                   controller.nextPage();
                   controller.saveFormData();
-                  if (controller.currentPageIndex == 1) {
+                  if (controller.currentPageIndex.value == 1) {
+                    userController.addUser(User(
+                        name: controller.name.text,
+                        phone: controller.phoneNumber.text,
+                        telephone: controller.cellNumber.text,
+                        email: controller.email.text,
+                        taxNumber: controller.taxNumber.text,
+                        country: controller.country.text,
+                        province: controller.governorate.text));
                     Get.to(DashboardPage());
                   }
                 },

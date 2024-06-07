@@ -31,11 +31,11 @@ class _BillWidgetState extends State<BillWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BillController());
+    final controller = Get.put(BbillController());
 
-    List<CategoryModel> category = controller.category
-        .where((cat) => cat.title == widget.category)
-        .toList();
+    // List<CategoryModel> category = controller.category
+    //     .where((cat) => cat.title == widget.category)
+    //     .toList();
 
     List<Bill> bills = controller.bills
         .where(

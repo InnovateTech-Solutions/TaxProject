@@ -23,7 +23,7 @@ class BillImgWiget extends StatelessWidget {
   final String category;
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BillController());
+    final controller = Get.put(BbillController());
     return Container(
       margin: const EdgeInsets.all(
         15,
