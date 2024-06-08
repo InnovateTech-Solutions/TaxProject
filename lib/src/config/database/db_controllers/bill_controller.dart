@@ -17,11 +17,11 @@ class LocalBillController extends GetxController {
   Future<void> addBill(Bill bill) async {
     final db = await dbHelper.database;
     await db.insert('Bill', bill.toMap());
-    // print("---------------------------------------");
-    // print("Bill added successfully");
-    // print(bill.billNo);
-    // print(bill.categoryId);
-    // print(bill.date);
+    print("---------------------------------------");
+    print("Bill added successfully");
+    print(bill.billNo);
+    print(bill.categoryId);
+    print(bill.date);
     // getBills();
   }
 
@@ -31,10 +31,14 @@ class LocalBillController extends GetxController {
     bills.value = List.generate(maps.length, (i) {
       return Bill.fromMap(maps[i]);
     });
-    for (var bill in bills) {
-      print("category id: ${bill.categoryId}");
-      // print("id: ${bill.id}");
-    }
+    // for (var bill in bills) {
+    //   print("---------------------------------------");
+    //   // print("Bill added successfully");
+    //   print(bill.billNo);
+    //   print(bill.categoryId);
+    //   print(bill.date);
+    //   getBills();
+    // }
   }
 
   Future<void> getBillsByCategoryId(int categoryId) async {
@@ -48,21 +52,26 @@ class LocalBillController extends GetxController {
     bills.value = List.generate(maps.length, (i) {
       return Bill.fromMap(maps[i]);
     });
-    for (var bill in bills) {
-      print("cat id${bill.categoryId}");
-    }
+    // for (var bill in bills) {
+    //   print("-----------------------------------------------");
+    //   print("category id: ${bill.categoryId}");
+    //   print("id: ${bill.id}, ");
+    //   print("billNo: ${bill.billNo}, ");
+    //   print("billValue: ${bill.billValue}, ");
+    //   print("date: ${bill.date}, ");
+    // }
   }
 
   Future<void> updateBill(Bill bill) async {
     final db = await dbHelper.database;
     await db
         .update('Bill', bill.toMap(), where: 'id = ?', whereArgs: [bill.id]);
-    getBills();
+    // getBills();
   }
 
   Future<void> deleteBill(int id) async {
     final db = await dbHelper.database;
     await db.delete('Bill', where: 'id = ?', whereArgs: [id]);
-    getBills();
+    // getBills();
   }
 }

@@ -13,9 +13,17 @@ class DashboardControlller extends GetxController {
     FileModel(
         icon: "assets/img/addFile.png",
         onTap: () {
-          Get.to(const PeriodsPage());
+          Get.to(const PeriodsPage(
+            view: "add",
+          ));
         }),
-    FileModel(icon: "assets/img/updateFile.png", onTap: () {}),
+    FileModel(
+        icon: "assets/img/updateFile.png",
+        onTap: () {
+          Get.to(const PeriodsPage(
+            view: "view",
+          ));
+        }),
     FileModel(icon: "assets/img/downloadFile.png", onTap: () {}),
   ];
 }

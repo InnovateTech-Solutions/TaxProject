@@ -24,6 +24,16 @@ class LocalCategoryController extends GetxController {
     categories.value = List.generate(maps.length, (i) {
       return Category.fromMap(maps[i]);
     });
+    for (var x in categories) {
+      // taxID.value = x.id!;
+      // print(taxID.value);
+      print(" ID: ${x.id}");
+      print("title: --> ${x.title}");
+      print("taxid: ${x.taxFormId}");
+      print("year: ${x.taxFormId}");
+      categoryFormId.value = x.id!;
+      print(", categoryId id ${x.categoryId}");
+    }
   }
 
   Future<void> updateCategory(Category category) async {
@@ -40,7 +50,9 @@ class LocalCategoryController extends GetxController {
   }
 
   Future<Category?> getCategoryByDetails(
-      int taxFormId, int categoryId, String title) async {
+    int taxFormId,
+    int categoryId,
+  ) async {
     final db = await dbHelper.database;
     categories.clear();
     final List<Map<String, dynamic>> result = await db.query(
@@ -58,7 +70,7 @@ class LocalCategoryController extends GetxController {
         print(" ID: ${x.id}");
         print("title: --> ${x.title}");
         print("taxid: ${x.taxFormId}");
-        categoryFormId.value = x.categoryId!;
+        categoryFormId.value = x.id!;
         print(", categoryId id ${x.categoryId}");
       }
       selectedCategory.value = Category.fromMap(result.first);

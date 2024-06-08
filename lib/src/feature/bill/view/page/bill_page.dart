@@ -10,7 +10,9 @@ class BillPage extends StatelessWidget {
     required this.periods,
     required this.taxPeriod,
     required this.categoryId,
+    required this.taxFormId,
   });
+  final int taxFormId;
   final int categoryId;
 
   final String taxPeriod;
@@ -39,8 +41,9 @@ class BillPage extends StatelessWidget {
               category: category,
               periods: periods,
               equation: equation,
-              taxPeriod: taxPeriod,
               categoryId: categoryId,
+              taxFormId: taxFormId,
+              taxPeriod: taxPeriod,
             )),
       ),
     );

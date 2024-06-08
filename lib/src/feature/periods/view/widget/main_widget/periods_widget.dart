@@ -11,8 +11,8 @@ import 'package:tax_project/src/feature/periods/view/widget/widget_collectio.dar
 import 'package:tax_project/src/feature/periods/view/widget/widget_collectio.dart/year_form.dart';
 
 class PeriodsWidget extends StatelessWidget {
-  const PeriodsWidget({super.key});
-
+  const PeriodsWidget({super.key, required this.view});
+  final String view;
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(PeriodsController());
@@ -79,6 +79,7 @@ class PeriodsWidget extends StatelessWidget {
                               ClassifiedPeriodsPage(
                                 periods: 'odd',
                                 year: controller.yearController.text,
+                                view: view,
                               ),
                               transition: Transition.fade);
                         } else {
@@ -99,8 +100,10 @@ class PeriodsWidget extends StatelessWidget {
                         if (fromKey.currentState!.validate()) {
                           Get.to(
                               ClassifiedPeriodsPage(
-                                  periods: 'even',
-                                  year: controller.yearController.text),
+                                periods: 'even',
+                                year: controller.yearController.text,
+                                view: view,
+                              ),
                               transition: Transition.fade);
                         }
                       })),

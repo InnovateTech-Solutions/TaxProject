@@ -6,7 +6,7 @@ class CategoryController extends GetxController {
 
   List<Category> category = [
     Category(
-      id: 4,
+      id: 1,
       title: "الرصيد المدور من الفترة السابقة",
     ),
     Category(
@@ -18,7 +18,7 @@ class CategoryController extends GetxController {
       title: "المستوردات الخاضعة للضريبة بنسبة",
     ),
     Category(
-      id: 1,
+      id: 4,
       title: "المستوردات مؤجلة توريد الضريبة",
     ),
     Category(

@@ -21,9 +21,11 @@ class BillFormWidget extends StatefulWidget {
     required this.equation,
     required this.category,
     required this.categoryId,
+    required this.taxFormId,
     required this.taxPeriod,
   });
   final String taxPeriod;
+  final int taxFormId;
   final int categoryId;
   final String periods;
   final String year;
@@ -212,21 +214,27 @@ class _BillFormWidgetState extends State<BillFormWidget> {
                   model: AppButtonModel(
                       title: "title",
                       onTap: () {
-                        localBillController.getBills();
+                        print(
+                            "catgoooryyy iiidddd ${localTaxFormController.taxID.value}");
+                        print("catgoooryyy iiidddd ${widget.taxPeriod}");
                       })),
               AppButton(
                   model: AppButtonModel(
                       title: "التالي",
                       onTap: () async {
-                        print(widget.taxPeriod);
+                        localTaxFormController.getTaxFormsByYearAndTaxPeriod(
+                            widget.year, widget.taxPeriod);
+                        print(
+                            "catgoooryyy iiidddd ${localTaxFormController.taxID.value}");
+                        await localCategoryController.getCategoryByDetails(
+                          localTaxFormController.taxID.value,
+                          widget.categoryId,
+                        );
+                        print(localCategoryController.categoryFormId.value);
+
+                        // print(widget.taxPeriod);
                         if (formKey.currentState!.validate()) {
                           try {
-                            print("catgoooryyy iiidddd ${widget.categoryId}");
-                            await localCategoryController.getCategoryByDetails(
-                                localTaxFormController.taxID.value,
-                                widget.categoryId,
-                                widget.category);
-
                             localBillController.addBill(Bill(
                                 categoryId: localCategoryController
                                     .categoryFormId.value,
@@ -250,8 +258,9 @@ class _BillFormWidgetState extends State<BillFormWidget> {
                             equation: widget.equation,
                             taxPeriod: '',
                             categoryId: widget.categoryId,
+                            taxFormId: widget.taxFormId,
                           ));
-                          // clearText();
+                          clearText();
                         }
                       }))
             ],

@@ -5,6 +5,7 @@ import 'package:tax_project/src/config/database/db_controllers/tax_form_controll
 import 'package:tax_project/src/config/database/models/category_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_img.dart';
+import 'package:tax_project/src/feature/bill/view/page/bill_page.dart';
 import 'package:tax_project/src/feature/category/controller/category_controller.dart';
 import 'package:tax_project/src/feature/category/view/widget/widget_collection/category_container.dart';
 
@@ -12,12 +13,13 @@ import '../../../../../config/themes/theme.dart';
 import '../../../../periods/view/widget/text_widget/period_text.dart';
 
 class CategoeyWidget extends StatelessWidget {
-  const CategoeyWidget({
-    super.key,
-    required this.periods,
-    required this.year,
-    required this.taxPeriod,
-  });
+  const CategoeyWidget(
+      {super.key,
+      required this.periods,
+      required this.year,
+      required this.taxPeriod,
+      required this.view});
+  final String view;
   final String taxPeriod;
   final String periods;
   final String year;
@@ -28,10 +30,11 @@ class CategoeyWidget extends StatelessWidget {
     final localTaxFormController = Get.put(TaxFormController());
 
     Future<void> addCategory(index) async {
+      print(controller.category[index].id);
       await localCategoryController.getCategoryByDetails(
-          localTaxFormController.taxID.value,
-          controller.category[index].id!,
-          controller.category[index].title!);
+        localTaxFormController.taxID.value,
+        controller.category[index].id!,
+      );
       final category = localCategoryController.categories;
       if (category.isEmpty) {
         print("its null");
@@ -42,14 +45,27 @@ class CategoeyWidget extends StatelessWidget {
       } else {
         print("its not null");
       }
-      Get.to(BillImgPage(
-        periods: periods,
-        year: year,
-        category: controller.category[index].title!,
-        equation: 0,
-        taxPeriod: taxPeriod,
-        categoryId: controller.category[index].id!,
-      ));
+      if (view == 'add') {
+        Get.to(BillImgPage(
+          periods: periods,
+          year: year,
+          category: controller.category[index].title!,
+          equation: 0,
+          categoryId: controller.category[index].id!,
+          taxFormId: localTaxFormController.taxID.value,
+          taxPeriod: taxPeriod,
+        ));
+      } else if (view == "view") {
+        Get.to(BillPage(
+          year: year,
+          category: controller.category[index].title!,
+          periods: periods,
+          equation: 0,
+          taxPeriod: taxPeriod,
+          categoryId: controller.category[index].id!,
+          taxFormId: localTaxFormController.taxID.value,
+        ));
+      }
     }
 
     return Container(
@@ -95,7 +111,7 @@ class CategoeyWidget extends StatelessWidget {
                       onTap: () async {
                         localTaxFormController.getTaxFormsByYearAndTaxPeriod(
                             year, taxPeriod);
-                        if (controller.category[index].id == 4) {
+                        if (controller.category[index].id == 1) {
                           addCategory(index);
                         } else if (controller.category[index].id == 2 ||
                             controller.category[index].id == 3 ||

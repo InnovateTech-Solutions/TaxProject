@@ -18,12 +18,14 @@ class BillWidget extends StatefulWidget {
     required this.category,
     required this.periods,
     required this.equation,
-    required this.taxPeriod,
     required this.categoryId,
+    required this.taxFormId,
+    required this.taxPeriod,
   });
+  final String taxPeriod;
+  final int taxFormId;
 
   final int categoryId;
-  final String taxPeriod;
   final String year;
   final String category;
   final String periods;
@@ -46,6 +48,10 @@ class _BillWidgetState extends State<BillWidget> {
   }
 
   Future<void> initializeBills() async {
+    localBillController.bills.clear();
+    await localCategoryController.getCategoryByDetails(
+        widget.taxFormId, widget.categoryId);
+    print("category from id : ${localCategoryController.categoryFormId.value}");
     await localBillController
         .getBillsByCategoryId(localCategoryController.categoryFormId.value);
     setState(() {
@@ -67,6 +73,10 @@ class _BillWidgetState extends State<BillWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          GestureDetector(
+              onTap: () {},
+              child: Text(
+                  localCategoryController.categoryFormId.value.toString())),
           Container(
             width: context.screenWidth * .7,
             height: context.screenHeight * 0.06,
@@ -75,10 +85,7 @@ class _BillWidgetState extends State<BillWidget> {
               borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
             ),
             child: GestureDetector(
-              onTap: () {
-                // Get.to(BillImgPage(
-                //     periods: periods, year: year, category: category));
-              },
+              onTap: () {},
               child: Row(
                 children: [
                   Text(
@@ -129,7 +136,7 @@ class _BillWidgetState extends State<BillWidget> {
                           ),
                         ),
                         Text(
-                          "# ${bills[index].billValue.toString()}",
+                          "# ${bills[index].categoryId.toString()}",
                           style: TextStyle(
                             color: AppTheme.lightAppColors.background,
                             fontSize: 25,
@@ -159,8 +166,9 @@ class _BillWidgetState extends State<BillWidget> {
                 year: widget.year,
                 equation: widget.equation,
                 category: widget.category,
-                taxPeriod: widget.taxPeriod,
                 categoryId: widget.categoryId,
+                taxFormId: widget.taxFormId,
+                taxPeriod: widget.taxPeriod,
               ));
             },
             child: Container(

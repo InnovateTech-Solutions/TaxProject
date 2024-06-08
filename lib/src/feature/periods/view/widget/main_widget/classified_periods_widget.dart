@@ -12,7 +12,11 @@ import 'package:tax_project/src/feature/tax_calculation/view/text/tax_text.dart'
 
 class ClassifiedPeriodsWidget extends StatelessWidget {
   const ClassifiedPeriodsWidget(
-      {super.key, required this.periods, required this.year});
+      {super.key,
+      required this.periods,
+      required this.year,
+      required this.view});
+  final String view;
   final String periods;
   final String year;
 
@@ -80,6 +84,7 @@ class ClassifiedPeriodsWidget extends StatelessWidget {
                         }
                         Get.to(
                             PreCategoryPage(
+                              view: view,
                               periods: periods,
                               year: year,
                               taxPeriod: periods == "odd"

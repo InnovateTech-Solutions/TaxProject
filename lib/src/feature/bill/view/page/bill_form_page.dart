@@ -10,12 +10,14 @@ class BillFormPage extends StatelessWidget {
     required this.img,
     required this.equation,
     required this.category,
-    required this.taxPeriod,
     required this.categoryId,
+    required this.taxFormId,
+    required this.taxPeriod,
   });
+  final String taxPeriod;
+  final int taxFormId;
   final int categoryId;
 
-  final String taxPeriod;
   final String periods;
   final String year;
   final String img;
@@ -33,8 +35,9 @@ class BillFormPage extends StatelessWidget {
               img: img,
               category: category,
               equation: equation,
-              taxPeriod: taxPeriod,
               categoryId: categoryId,
+              taxFormId: taxFormId,
+              taxPeriod: taxPeriod,
             ),
             context),
       ),

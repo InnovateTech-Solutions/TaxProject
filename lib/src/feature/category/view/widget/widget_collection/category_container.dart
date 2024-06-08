@@ -82,8 +82,9 @@ Future<dynamic> percentageDialog(
                           category: category,
                           equation: percentages[index],
                           percentageValue: percentages[index],
-                          taxPeriod: taxPeriod,
                           categoryId: categoryId,
+                          taxFormId: 1,
+                          taxPeriod: taxPeriod,
                         ));
                       },
                       child: Container(
@@ -157,8 +158,9 @@ Future<dynamic> percentageDialog(
                       category: category,
                       equation: double.parse(value.text),
                       percentageValue: double.parse(value.text),
-                      taxPeriod: taxPeriod,
                       categoryId: categoryId,
+                      taxFormId: 1,
+                      taxPeriod: taxPeriod,
                     ));
                   },
                 )),

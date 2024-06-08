@@ -24,12 +24,13 @@ class TaxFormController extends GetxController {
     });
     // Print the value of taxForms
     for (var x in taxForms) {
-      print("tax 11111: ${x.id} Period: --> ${x.taxPeriod}+++${x.year}");
+      print("tax id: ${x.id} Period: --> ${x.taxPeriod}+++${x.year}");
     }
   }
 
   Future<void> getTaxFormsByYearAndTaxPeriod(
       String year, String taxPeriod) async {
+    taxForms.clear();
     final db = await dbHelper.database;
     final List<Map<String, dynamic>> maps = await db.query(
       'TaxForm',

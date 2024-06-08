@@ -5,7 +5,11 @@ import '../../../../config/themes/background.dart';
 
 class ClassifiedPeriodsPage extends StatelessWidget {
   const ClassifiedPeriodsPage(
-      {super.key, required this.periods, required this.year});
+      {super.key,
+      required this.periods,
+      required this.year,
+      required this.view});
+  final String view;
   final String periods;
   final String year;
   @override
@@ -16,6 +20,7 @@ class ClassifiedPeriodsPage extends StatelessWidget {
               ClassifiedPeriodsWidget(
                 periods: periods,
                 year: year,
+                view: view,
               ),
               context)),
     );

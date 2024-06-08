@@ -11,12 +11,13 @@ import 'package:tax_project/src/feature/tax_calculation/view/main/tax_calcuation
 import 'package:tax_project/src/feature/tax_calculation/view/text/tax_text.dart';
 
 class PreCategoryWidget extends StatelessWidget {
-  const PreCategoryWidget({
-    super.key,
-    required this.periods,
-    required this.year,
-    required this.taxPeriod,
-  });
+  const PreCategoryWidget(
+      {super.key,
+      required this.periods,
+      required this.year,
+      required this.taxPeriod,
+      required this.view});
+  final String view;
   final String taxPeriod;
   final String periods;
   final String year;
@@ -27,6 +28,7 @@ class PreCategoryWidget extends StatelessWidget {
           title: "بيانات الإقرار",
           onTap: () {
             Get.to(CategoryPage(
+              view: view,
               periods: periods,
               year: year,
               taxPeriod: taxPeriod,
@@ -36,6 +38,7 @@ class PreCategoryWidget extends StatelessWidget {
           title: "احتساب الضريبة المستحقة",
           onTap: () {
             Get.to(TaxCalculationPage(
+              view: view,
               periods: periods,
               year: year,
               taxPeriod: taxPeriod,
