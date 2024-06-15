@@ -22,7 +22,6 @@ class RegisterWidget extends StatefulWidget {
 class _RegisterWidgetState extends State<RegisterWidget> {
   final controller = Get.put(RegisterController());
   final UserController userController = Get.put(UserController());
-
   @override
   void initState() {
     controller.loadFormData();
@@ -63,21 +62,24 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             SizedBox(
               width: context.screenWidth * 1,
               height: context.screenHeight * 0.57,
-              child: PageView(
-                controller: controller.pageController,
-                onPageChanged: (index) {
-                  controller.currentPageIndex.value = index;
-                },
-                children: [
-                  Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: context.screenWidth * 0.1),
-                      child: const FirstRegiterWidget()),
-                  Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: context.screenWidth * 0.1),
-                      child: const SecRegisterWidget()),
-                ],
+              child: Form(
+                key: controller.formKey,
+                child: PageView(
+                  controller: controller.pageController,
+                  onPageChanged: (index) {
+                    controller.currentPageIndex.value = index;
+                  },
+                  children: [
+                    Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: context.screenWidth * 0.1),
+                        child: const FirstRegiterWidget()),
+                    Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: context.screenWidth * 0.1),
+                        child: const SecRegisterWidget()),
+                  ],
+                ),
               ),
             ),
             Padding(

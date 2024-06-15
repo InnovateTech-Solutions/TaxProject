@@ -27,7 +27,7 @@ class DBHelper {
 
     return await openDatabase(
       path,
-      version: 2, // Make sure to set the correct version
+      version: 3, // Increment the version number
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE Users (
@@ -46,6 +46,7 @@ class DBHelper {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             year TEXT,
             taxPeriod TEXT,
+            period INTEGER,
             field14 TEXT,
             field15 TEXT,
             field16 BOOLEAN,
@@ -91,8 +92,12 @@ class DBHelper {
         ''');
       },
       onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 3) {
+          // Add the new period column to the existing TaxForm table
+          await db.execute('ALTER TABLE TaxForm ADD COLUMN period INTEGER');
+        }
         if (oldVersion < 2) {
-          // Add the new column to the existing Category table
+          // Add the categoryId column to the existing Category table
           await db
               .execute('ALTER TABLE Category ADD COLUMN categoryId INTEGER');
         }

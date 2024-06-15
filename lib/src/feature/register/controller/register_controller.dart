@@ -13,6 +13,8 @@ class RegisterController extends GetxController {
   final PageController pageController = PageController();
   final RxInt currentPageIndex = 0.obs;
   RxBool color = false.obs;
+  RxBool isFirst = false.obs;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   double get progress => currentPageIndex.value / 2;
 
@@ -24,11 +26,13 @@ class RegisterController extends GetxController {
 
   void nextPage() {
     if (currentPageIndex.value < 1) {
-      pageController.nextPage(
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.ease,
-      );
-    }
+      if (formKey.currentState!.validate()) {
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      }
+    } else {}
   }
 
   Color getIconColor(int currentIndex) {
@@ -59,6 +63,14 @@ class RegisterController extends GetxController {
     governorate.text = prefs.getString('governorate') ?? '';
     taxNumber.text = prefs.getString('taxNumber') ?? '';
     email.text = prefs.getString('email') ?? '';
+  }
+
+  validation(String value) {
+    if (value.isEmpty) {
+      return "يرجى ملء الحقل";
+    } else {
+      return null;
+    }
   }
 
   final List<String> cities = [

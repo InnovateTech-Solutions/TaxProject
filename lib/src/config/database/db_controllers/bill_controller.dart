@@ -6,7 +6,7 @@ import '../models/bill_model.dart';
 class LocalBillController extends GetxController {
   var bills = <Bill>[].obs;
   DBHelper dbHelper = DBHelper.dbHelper;
-
+  RxDouble total = 0.0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -41,6 +41,14 @@ class LocalBillController extends GetxController {
     // }
   }
 
+  Future<void> totalBill() async {
+    double sum = 0;
+    for (var bill in bills) {
+      sum += bill.billValue!;
+    }
+    total.value = sum;
+  }
+
   Future<void> getBillsByCategoryId(int categoryId) async {
     bills.clear();
     final db = await dbHelper.database;
@@ -52,6 +60,8 @@ class LocalBillController extends GetxController {
     bills.value = List.generate(maps.length, (i) {
       return Bill.fromMap(maps[i]);
     });
+    total.value = 0.0;
+    totalBill();
     // for (var bill in bills) {
     //   print("-----------------------------------------------");
     //   print("category id: ${bill.categoryId}");

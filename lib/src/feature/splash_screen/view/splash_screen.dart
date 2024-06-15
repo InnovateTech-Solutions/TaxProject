@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
 import 'package:tax_project/src/config/themes/background.dart';
 import 'package:tax_project/src/config/themes/theme.dart';
-import 'package:tax_project/src/feature/dashboard/view/pages/dashboard_page.dart';
+import 'package:tax_project/src/feature/splash_screen/view/first_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
       Get.offAll(
-        const DashboardPage(),
+        const FirstPage(),
         transition: Transition.fade,
         duration: const Duration(seconds: 2),
         curve: Curves.easeInOut,

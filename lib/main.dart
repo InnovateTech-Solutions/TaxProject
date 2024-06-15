@@ -21,3 +21,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+///////////////odd 0
+//////////////even 1

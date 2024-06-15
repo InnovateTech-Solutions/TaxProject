@@ -62,7 +62,7 @@ class FirstRegiterWidget extends StatelessWidget {
           enableText: false,
           hintText: "رقم الضريبي",
           invisible: false,
-          validator: null,
+          validator: (value) => controller.validation(value!),
           type: TextInputType.number,
           inputFormat: null,
         ),

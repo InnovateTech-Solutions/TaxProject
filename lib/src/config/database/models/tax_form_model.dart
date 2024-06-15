@@ -2,6 +2,7 @@ class TaxForm {
   int? id;
   String? year;
   String? taxPeriod;
+  int? period; // New field
   String? field14;
   String? field15;
   bool? field16;
@@ -14,6 +15,7 @@ class TaxForm {
     this.id,
     this.year,
     this.taxPeriod,
+    this.period, // New field
     this.field14,
     this.field15,
     this.field16,
@@ -28,6 +30,7 @@ class TaxForm {
       'id': id,
       'year': year,
       'taxPeriod': taxPeriod,
+      'period': period, // New field
       'field14': field14,
       'field15': field15,
       'field16': field16,
@@ -43,6 +46,7 @@ class TaxForm {
       id: map['id'],
       year: map['year'],
       taxPeriod: map['taxPeriod'],
+      period: map['period'], // New field
       field14: map['field14'],
       field15: map['field15'],
       field16: map['field16'],

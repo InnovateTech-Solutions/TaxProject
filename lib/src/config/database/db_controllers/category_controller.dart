@@ -25,14 +25,12 @@ class LocalCategoryController extends GetxController {
       return Category.fromMap(maps[i]);
     });
     for (var x in categories) {
-      // taxID.value = x.id!;
-      // print(taxID.value);
-      print(" ID: ${x.id}");
-      print("title: --> ${x.title}");
-      print("taxid: ${x.taxFormId}");
-      print("year: ${x.taxFormId}");
+      print("ID: ${x.id}");
+      print("Title: ${x.title}");
+      print("Tax Form ID: ${x.taxFormId}");
+      print("Year: ${x.taxFormId}");
       categoryFormId.value = x.id!;
-      print(", categoryId id ${x.categoryId}");
+      print("Category ID: ${x.categoryId}");
     }
   }
 
@@ -49,10 +47,27 @@ class LocalCategoryController extends GetxController {
     await getCategories();
   }
 
-  Future<Category?> getCategoryByDetails(
-    int taxFormId,
-    int categoryId,
-  ) async {
+  Future<void> getCategoriesByTaxFormId(int taxFormId) async {
+    final db = await dbHelper.database;
+    final List<Map<String, dynamic>> result = await db.query(
+      'Category',
+      where: 'taxFormId = ?',
+      whereArgs: [taxFormId],
+    );
+    categories.value = List.generate(result.length, (i) {
+      return Category.fromMap(result[i]);
+    });
+    for (var x in categories) {
+      print("----------------------------------");
+      print("ID: ${x.id}");
+      print("Title: ${x.title}");
+      print("Tax Form ID: ${x.taxFormId}");
+      categoryFormId.value = x.id!;
+      print("Category ID: ${x.categoryId}");
+    }
+  }
+
+  Future<Category?> getCategoryByDetails(int taxFormId, int categoryId) async {
     final db = await dbHelper.database;
     categories.clear();
     final List<Map<String, dynamic>> result = await db.query(
@@ -65,13 +80,11 @@ class LocalCategoryController extends GetxController {
         return Category.fromMap(result[i]);
       });
       for (var x in categories) {
-        // taxID.value = x.id!;
-        // print(taxID.value);
-        print(" ID: ${x.id}");
-        print("title: --> ${x.title}");
-        print("taxid: ${x.taxFormId}");
+        print("ID: ${x.id}");
+        print("Title: ${x.title}");
+        print("Tax Form ID: ${x.taxFormId}");
         categoryFormId.value = x.id!;
-        print(", categoryId id ${x.categoryId}");
+        print("Category ID: ${x.categoryId}");
       }
       selectedCategory.value = Category.fromMap(result.first);
       return Category.fromMap(result.first);
@@ -80,11 +93,9 @@ class LocalCategoryController extends GetxController {
     }
   }
 
-  // New method to fetch and set the selected category
-  // Future<void> fetchAndSetCategory(
-  //     int taxFormId, int categoryId, String title) async {
-  //   print("form id $taxFormId, category id : $categoryId title: $title");
-  //   final category = await getCategoryByDetails(taxFormId, categoryId, title);
+  // Uncomment and adjust if needed for fetching and setting the selected category
+  // Future<void> fetchAndSetCategory(int taxFormId, int categoryId) async {
+  //   final category = await getCategoryByDetails(taxFormId, categoryId);
   //   selectedCategory.value = category; // Set the observable property
   // }
 }

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tax_project/src/config/database/db_controllers/category_controller.dart';
 import 'package:tax_project/src/config/database/db_controllers/tax_form_controller.dart';
-import 'package:tax_project/src/config/database/models/category_model.dart';
 import 'package:tax_project/src/config/sizes/sizes.dart';
-import 'package:tax_project/src/feature/bill/view/page/bill_img.dart';
 import 'package:tax_project/src/feature/bill/view/page/bill_page.dart';
 import 'package:tax_project/src/feature/category/controller/category_controller.dart';
 import 'package:tax_project/src/feature/category/view/widget/widget_collection/category_container.dart';
@@ -12,8 +10,8 @@ import 'package:tax_project/src/feature/category/view/widget/widget_collection/c
 import '../../../../../config/themes/theme.dart';
 import '../../../../periods/view/widget/text_widget/period_text.dart';
 
-class CategoeyWidget extends StatefulWidget {
-  const CategoeyWidget(
+class ViewCategoeyWidget extends StatefulWidget {
+  const ViewCategoeyWidget(
       {super.key,
       required this.periods,
       required this.year,
@@ -25,10 +23,10 @@ class CategoeyWidget extends StatefulWidget {
   final String year;
 
   @override
-  State<CategoeyWidget> createState() => _CategoeyWidgetState();
+  State<ViewCategoeyWidget> createState() => _ViewCategoeyWidgetState();
 }
 
-class _CategoeyWidgetState extends State<CategoeyWidget> {
+class _ViewCategoeyWidgetState extends State<ViewCategoeyWidget> {
   final controller = Get.put(CategoryController());
   final localCategoryController = Get.put(LocalCategoryController());
   final localTaxFormController = Get.put(TaxFormController());
@@ -41,39 +39,41 @@ class _CategoeyWidgetState extends State<CategoeyWidget> {
   Future<void> getTaxForm() async {
     await localTaxFormController.getTaxFormsByYearAndTaxPeriod(
         widget.year, widget.taxPeriod);
+    localCategoryController.categories.clear();
+
     localCategoryController
         .getCategoriesByTaxFormId(localTaxFormController.taxID.value);
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<void> addCategory(index) async {
-      print(controller.category[index].id);
-      await localCategoryController.getCategoryByDetails(
-        localTaxFormController.taxID.value,
-        controller.category[index].id!,
-      );
-      final category = localCategoryController.categories;
-      if (category.isEmpty) {
-        print("its null");
-        localCategoryController.addCategory(Category(
-            taxFormId: localTaxFormController.taxID.value,
-            title: controller.category[index].title,
-            categoryId: controller.category[index].id));
-      } else {
-        print("its not null");
-      }
+    // Future<void> addCategory(index) async {
+    //   print(controller.category[index].id);
+    //   await localCategoryController.getCategoryByDetails(
+    //     localTaxFormController.taxID.value,
+    //     controller.category[index].id!,
+    //   );
+    //   final category = localCategoryController.categories;
+    //   if (category.isEmpty) {
+    //     print("its null");
+    //     localCategoryController.addCategory(Category(
+    //         taxFormId: localTaxFormController.taxID.value,
+    //         title: controller.category[index].title,
+    //         categoryId: controller.category[index].id));
+    //   } else {
+    //     print("its not null");
+    //   }
 
-      Get.to(BillImgPage(
-        periods: widget.periods,
-        year: widget.year,
-        category: controller.category[index].title!,
-        equation: 0,
-        categoryId: controller.category[index].id!,
-        taxFormId: localTaxFormController.taxID.value,
-        taxPeriod: widget.taxPeriod,
-      ));
-    }
+    //   Get.to(BillImgPage(
+    //     periods: widget.periods,
+    //     year: widget.year,
+    //     category: controller.category[index].title!,
+    //     equation: 0,
+    //     categoryId: controller.category[index].id!,
+    //     taxFormId: localTaxFormController.taxID.value,
+    //     taxPeriod: widget.taxPeriod,
+    //   ));
+    // }
 
     return Container(
       margin: const EdgeInsets.only(top: 15),
@@ -123,7 +123,7 @@ class _CategoeyWidgetState extends State<CategoeyWidget> {
                                   .getTaxFormsByYearAndTaxPeriod(
                                       widget.year, widget.taxPeriod);
                               if (controller.category[index].id == 1) {
-                                addCategory(index);
+                                // addCategory(index);
                               } else if (controller.category[index].id == 2 ||
                                   controller.category[index].id == 3 ||
                                   controller.category[index].id == 6) {
@@ -137,7 +137,7 @@ class _CategoeyWidgetState extends State<CategoeyWidget> {
                                   controller.category[index].id!,
                                 );
                               } else {
-                                addCategory(index);
+                                // addCategory(index);
                               }
                             },
                             child: CategoryContainer(

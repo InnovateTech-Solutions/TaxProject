@@ -89,7 +89,7 @@ class _BillWidgetState extends State<BillWidget> {
               child: Row(
                 children: [
                   Text(
-                    "  المجموع ${controller.total.value.toString()} دينار",
+                    "  المجموع ${localBillController.total.value.toString()} دينار",
                     style: TextStyle(
                       color: AppTheme.lightAppColors.background,
                       fontSize: 25,

@@ -9,6 +9,7 @@ import 'package:tax_project/src/feature/register/view/widget/text_widget/registe
 import 'package:tax_project/src/feature/register/view/widget/widget_collection/app_button.dart';
 import 'package:tax_project/src/feature/tax_calculation/view/main/tax_calcuation_page.dart';
 import 'package:tax_project/src/feature/tax_calculation/view/text/tax_text.dart';
+import 'package:tax_project/src/feature/view_pages/category/view/page/view_category_page.dart';
 
 class PreCategoryWidget extends StatelessWidget {
   const PreCategoryWidget(
@@ -27,12 +28,19 @@ class PreCategoryWidget extends StatelessWidget {
       AppButtonModel(
           title: "بيانات الإقرار",
           onTap: () {
-            Get.to(CategoryPage(
-              view: view,
-              periods: periods,
-              year: year,
-              taxPeriod: taxPeriod,
-            ));
+            Get.to(view == "add"
+                ? CategoryPage(
+                    view: view,
+                    periods: periods,
+                    year: year,
+                    taxPeriod: taxPeriod,
+                  )
+                : ViewCategoryPage(
+                    view: view,
+                    periods: periods,
+                    year: year,
+                    taxPeriod: taxPeriod,
+                  ));
           }),
       AppButtonModel(
           title: "احتساب الضريبة المستحقة",
